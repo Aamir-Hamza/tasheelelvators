@@ -30,12 +30,12 @@ export function CtaBand() {
             </Link>
           </Button>
           <Button asChild size="lg" variant="secondary">
-            <a href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}>
+            <a href={SITE.whatsappHref}>
               <MessageCircle className="h-4 w-4" /> WhatsApp
             </a>
           </Button>
           <Button asChild size="lg" variant="secondary">
-            <a href={`tel:${SITE.emergency.replace(/\s/g, "")}`}>
+            <a href={SITE.emergencyHref}>
               <Phone className="h-4 w-4" /> Emergency
             </a>
           </Button>

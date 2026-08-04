@@ -102,14 +102,14 @@ export function FloatingActions() {
 
         <div className="flex flex-col gap-2">
           <a
-            href={`tel:${SITE.emergency.replace(/\s/g, "")}`}
+            href={SITE.emergencyHref}
             className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500 text-white shadow-lg transition hover:scale-105"
             aria-label="Emergency call"
           >
             <Phone className="h-5 w-5" />
           </a>
           <a
-            href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}
+            href={SITE.whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"

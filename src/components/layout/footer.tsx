@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SITE, NAV_LINKS } from "@/lib/constants";
+import { Logo } from "@/components/Logo";
 import { ArrowUpRight } from "lucide-react";
 
 export function Footer() {
@@ -12,13 +13,8 @@ export function Footer() {
       <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-10">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-electric text-sm font-bold">
-                TE
-              </span>
-              <span className="font-display text-xl font-bold">
-                Tasheel Elevators
-              </span>
+            <div className="inline-flex items-center">
+              <Logo height={72} href="/" withWordmark lightWordmark />
             </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-silver/80">
               {SITE.description}
@@ -26,8 +22,15 @@ export function Footer() {
             <div className="mt-6 space-y-2 text-sm text-silver/75">
               <p>{SITE.address.full}</p>
               <p>
-                <a href={`tel:${SITE.phone.replace(/\s/g, "")}`} className="hover:text-white">
+                P.O. Box {SITE.address.poBox}, P.C. {SITE.address.postalCode}
+              </p>
+              <p>
+                <a href={SITE.phoneHref} className="hover:text-white">
                   {SITE.phone}
+                </a>
+                {" · "}
+                <a href={SITE.phoneAltHref} className="hover:text-white">
+                  {SITE.phoneAlt}
                 </a>
               </p>
               <p>
@@ -35,6 +38,12 @@ export function Footer() {
                   {SITE.email}
                 </a>
               </p>
+              <p>
+                <a href={`mailto:${SITE.salesEmail}`} className="hover:text-white">
+                  {SITE.salesEmail}
+                </a>
+              </p>
+              <p className="text-xs text-silver/50">C.R. {SITE.crNumber}</p>
             </div>
           </div>
 
@@ -112,7 +121,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}
+                  href={SITE.whatsappHref}
                   className="text-sm text-silver/75 transition hover:text-white"
                   target="_blank"
                   rel="noopener noreferrer"

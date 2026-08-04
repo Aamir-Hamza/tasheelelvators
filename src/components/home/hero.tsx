@@ -1,17 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { SITE } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { AnimatedCounter } from "@/components/shared/animated-counter";
-
-const ElevatorCanvas = dynamic(
-  () => import("./elevator-canvas").then((m) => m.ElevatorCanvas),
-  { ssr: false, loading: () => <div className="absolute inset-0 bg-navy-deep" /> }
-);
+import { ElevatorCanvas } from "./elevator-canvas";
 
 export function Hero() {
   return (

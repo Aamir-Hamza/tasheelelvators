@@ -23,21 +23,34 @@ export default function ContactPage() {
         <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-6">
             <Info icon={MapPin} label="Office" value={SITE.address.full} />
-            <Info icon={Phone} label="Phone" value={SITE.phone} href={`tel:${SITE.phone.replace(/\s/g, "")}`} />
+            <Info
+              icon={MapPin}
+              label="P.O. Box"
+              value={`P.O. Box ${SITE.address.poBox}, P.C. ${SITE.address.postalCode}`}
+            />
+            <Info icon={Phone} label="Tel" value={SITE.phone} href={SITE.phoneHref} />
+            <Info icon={Phone} label="Tel (Alt)" value={SITE.phoneAlt} href={SITE.phoneAltHref} />
             <Info
               icon={MessageCircle}
               label="WhatsApp"
               value={SITE.whatsapp}
-              href={`https://wa.me/${SITE.whatsapp.replace(/\D/g, "")}`}
+              href={SITE.whatsappHref}
             />
-            <Info icon={Mail} label="Email" value={SITE.email} href={`mailto:${SITE.email}`} />
+            <Info icon={Mail} label="Info" value={SITE.email} href={`mailto:${SITE.email}`} />
+            <Info
+              icon={Mail}
+              label="Sales"
+              value={SITE.salesEmail}
+              href={`mailto:${SITE.salesEmail}`}
+            />
             <Info icon={Clock} label="Working hours" value={SITE.hours} />
+            <p className="px-1 text-xs text-muted">C.R. {SITE.crNumber}</p>
             <div className="rounded-2xl border border-red-500/30 bg-red-500/5 p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-red-500">
                 Emergency
               </p>
               <a
-                href={`tel:${SITE.emergency.replace(/\s/g, "")}`}
+                href={SITE.emergencyHref}
                 className="mt-2 block font-display text-2xl font-bold text-red-500"
               >
                 {SITE.emergency}

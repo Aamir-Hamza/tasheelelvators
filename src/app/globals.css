@@ -9,6 +9,9 @@
   --navy: #0a1628;
   --navy-deep: #06101c;
   --charcoal: #14181f;
+  --brand-navy: #2b4169;
+  --brand-blue: #4a89c6;
+  --brand-orange: #f57e25;
   --electric: #1b8fff;
   --electric-bright: #4aa8ff;
   --silver: #c5ced8;
@@ -38,6 +41,9 @@
   --color-navy: var(--navy);
   --color-navy-deep: var(--navy-deep);
   --color-charcoal: var(--charcoal);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-orange: var(--brand-orange);
   --color-electric: var(--electric);
   --color-electric-bright: var(--electric-bright);
   --color-silver: var(--silver);
@@ -150,6 +156,27 @@ h4,
 
 .animate-pulse-ring {
   animation: pulse-ring 2s ease-out infinite;
+}
+
+.elevator-cabin {
+  animation: cabin-travel 5.5s ease-in-out infinite;
+}
+
+@keyframes cabin-travel {
+  0%,
+  100% {
+    top: 58%;
+  }
+  50% {
+    top: 14%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .elevator-cabin {
+    animation: none;
+    top: 36%;
+  }
 }
 
 .noise-overlay {
