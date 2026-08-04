@@ -10,12 +10,14 @@ export const SITE = {
   salesEmail: "sale@tasheelelevators.com",
   phone: "+968 79123229",
   phoneAlt: "+968 95595521",
-  whatsapp: "+968 93608085",
+  whatsapp: "+968 79123229",
   emergency: "+968 79123229",
-  /** Digits-only for tel: and wa.me links */
+  /** Digits-only for tel: and WhatsApp links */
   phoneHref: "tel:+96879123229",
   phoneAltHref: "tel:+96895595521",
-  whatsappHref: "https://wa.me/96893608085",
+  whatsappNumber: "96879123229",
+  whatsappHref:
+    "https://api.whatsapp.com/send?phone=96879123229&text=Hello%21%20I%20am%20inquiring%20about%20elevator%20installation%20and%20maintenance%20services.",
   emergencyHref: "tel:+96879123229",
   address: {
     line1: "Office No. 13, First Floor",

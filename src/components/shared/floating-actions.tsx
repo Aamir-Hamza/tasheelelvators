@@ -5,6 +5,7 @@ import { MessageCircle, Phone, X, Send } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { SITE } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const replies: Record<string, string> = {
   quote:
@@ -100,27 +101,22 @@ export function FloatingActions() {
           )}
         </AnimatePresence>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col items-end gap-3">
           <a
             href={SITE.emergencyHref}
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500 text-white shadow-lg transition hover:scale-105"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500 text-white shadow-lg transition-transform hover:scale-110"
             aria-label="Emergency call"
           >
             <Phone className="h-5 w-5" />
           </a>
-          <a
-            href={SITE.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
-            aria-label="WhatsApp"
-          >
-            <MessageCircle className="h-5 w-5" />
-          </a>
+
+          {/* Working WhatsApp click-to-chat */}
+          <WhatsAppButton phone={SITE.whatsappNumber} />
+
           <button
             type="button"
             onClick={() => setChatOpen((v) => !v)}
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-electric text-white shadow-[var(--shadow-glow)] transition hover:scale-105"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-electric text-white shadow-[var(--shadow-glow)] transition-transform hover:scale-110"
             aria-label="Open AI assistant"
           >
             <MessageCircle className="h-5 w-5" />

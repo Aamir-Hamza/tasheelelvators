@@ -102,7 +102,7 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               className="hidden items-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-sm font-semibold text-white shadow-md transition duration-200 hover:scale-[1.03] hover:bg-[#1ebe57] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] sm:inline-flex"
-              aria-label="WhatsApp"
+              aria-label="Chat with us on WhatsApp"
             >
               <MessageCircle className="h-4 w-4" />
               <span className="hidden lg:inline">WhatsApp</span>
