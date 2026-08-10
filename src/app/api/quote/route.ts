@@ -6,11 +6,13 @@ const schema = z.object({
   email: z.string().email(),
   phone: z.string().min(8),
   projectType: z.string(),
-  floors: z.number(),
-  capacity: z.number(),
-  units: z.number(),
-  city: z.string(),
+  floors: z.number().optional(),
+  capacity: z.number().optional(),
+  units: z.number().optional(),
+  city: z.string().optional(),
   notes: z.string().optional(),
+  serviceType: z.string().optional(),
+  details: z.string().optional(),
   estimate: z
     .object({
       low: z.number(),

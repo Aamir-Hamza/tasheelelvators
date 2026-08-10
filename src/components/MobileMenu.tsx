@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Phone, MessageCircle, X } from "lucide-react";
+import { Phone, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Navbar } from "@/components/Navbar";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { SITE } from "@/lib/constants";
 
 type MobileMenuProps = {
@@ -37,7 +39,7 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[60] xl:hidden"
+          className="fixed inset-0 z-[60] lg:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -45,7 +47,7 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
         >
           <button
             type="button"
-            className="absolute inset-0 bg-[#0a1628]/45 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"
             aria-label="Close menu overlay"
             onClick={onClose}
           />
@@ -60,12 +62,12 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
             transition={{ type: "spring", stiffness: 320, damping: 34 }}
             className="absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-white shadow-2xl"
           >
-            <div className="flex items-center justify-between border-b border-black/5 px-6 py-4">
-              <Logo height={52} href="/" withWordmark />
+            <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+              <Logo height={48} href="/" withWordmark />
               <button
                 type="button"
                 onClick={onClose}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/10 text-[#0a1628] transition hover:bg-black/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b8fff]"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 text-slate-900"
                 aria-label="Close menu"
               >
                 <X className="h-5 w-5" />
@@ -76,7 +78,7 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
               <Navbar variant="mobile" onNavigate={onClose} />
             </div>
 
-            <div className="space-y-3 border-t border-black/5 px-6 py-5">
+            <div className="space-y-3 border-t border-slate-100 px-6 py-5">
               <div className="flex gap-2" role="group" aria-label="Language">
                 {(["en", "ar"] as const).map((code) => (
                   <button
@@ -85,8 +87,8 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
                     onClick={() => onLangChange(code)}
                     className={`flex-1 rounded-full px-3 py-2.5 text-sm font-semibold transition ${
                       lang === code
-                        ? "bg-[#0a1628] text-white"
-                        : "border border-black/10 text-[#0a1628] hover:bg-black/[0.04]"
+                        ? "bg-slate-900 text-white"
+                        : "border border-slate-200 text-slate-900"
                     }`}
                     aria-pressed={lang === code}
                   >
@@ -95,22 +97,20 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
                 ))}
               </div>
 
+              <Link
+                href="/quote"
+                onClick={onClose}
+                className="flex items-center justify-center rounded-full bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white"
+              >
+                Request a Proposal
+              </Link>
               <a
                 href={SITE.phoneHref}
-                className="flex items-center justify-center gap-2 rounded-full bg-[#0a1628] px-5 py-3.5 text-sm font-semibold text-white transition hover:scale-[1.02] hover:shadow-lg"
+                className="flex items-center justify-center gap-2 rounded-full bg-amber-600 px-5 py-3.5 text-sm font-semibold text-white"
               >
-                <Phone className="h-4 w-4" />
-                Call Now
+                <Phone className="h-4 w-4" /> Call Now
               </a>
-              <a
-                href={SITE.whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3.5 text-sm font-semibold text-white transition hover:scale-[1.02] hover:shadow-lg"
-              >
-                <MessageCircle className="h-4 w-4" />
-                WhatsApp
-              </a>
+              <WhatsAppButton variant="inline" className="w-full" />
             </div>
           </motion.aside>
         </motion.div>

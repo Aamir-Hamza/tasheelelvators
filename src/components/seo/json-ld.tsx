@@ -19,6 +19,18 @@ export function JsonLd() {
       addressCountry: "OM",
       postOfficeBoxNumber: SITE.address.poBox,
     },
+    department: [
+      {
+        "@type": "Organization",
+        name: "Tasheel Elevators & Escalators",
+        url: `${SITE.url}/divisions/elevators`,
+      },
+      {
+        "@type": "Organization",
+        name: "Tasheel CCTV & Smart Home",
+        url: `${SITE.url}/divisions/cctv-smart-home`,
+      },
+    ],
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -26,21 +38,6 @@ export function JsonLd() {
         email: SITE.salesEmail,
         contactType: "sales",
         areaServed: ["OM", "AE", "SA", "QA", "BH", "KW"],
-        availableLanguage: ["English", "Arabic"],
-      },
-      {
-        "@type": "ContactPoint",
-        telephone: SITE.phoneAlt,
-        email: SITE.email,
-        contactType: "customer service",
-        areaServed: ["OM", "AE", "SA", "QA", "BH", "KW"],
-        availableLanguage: ["English", "Arabic"],
-      },
-      {
-        "@type": "ContactPoint",
-        telephone: SITE.whatsapp,
-        contactType: "customer support",
-        areaServed: "OM",
         availableLanguage: ["English", "Arabic"],
       },
       {

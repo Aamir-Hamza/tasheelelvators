@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/constants";
 import { products } from "@/lib/data/products";
-import { services } from "@/lib/data/services";
+import { coreServices } from "@/data/services";
 import { projects } from "@/lib/data/projects";
 import { blogPosts } from "@/lib/data/content";
 
@@ -11,6 +11,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/products",
     "/services",
+    "/divisions",
+    "/divisions/elevators",
+    "/divisions/cctv-smart-home",
     "/projects",
     "/industries",
     "/contact",
@@ -36,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const serviceRoutes = services.map((s) => ({
+  const serviceRoutes = coreServices.map((s) => ({
     url: `${SITE.url}/services/${s.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,

@@ -1,25 +1,23 @@
 import Link from "next/link";
-import { SITE, NAV_LINKS } from "@/lib/constants";
+import { SITE, DIVISIONS, HEADER_NAV } from "@/lib/constants";
 import { Logo } from "@/components/Logo";
 import { ArrowUpRight } from "lucide-react";
 
 export function Footer() {
-  const products = NAV_LINKS.find((l) => l.label === "Products")?.children ?? [];
-  const services = NAV_LINKS.find((l) => l.label === "Services")?.children ?? [];
+  const services =
+    HEADER_NAV.find((l) => l.label === "Services")?.children ?? [];
 
   return (
-    <footer className="relative overflow-hidden bg-navy-deep text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(27,143,255,0.12),transparent_45%)]" />
+    <footer className="relative overflow-hidden bg-slate-950 text-white">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(2,132,199,0.12),transparent_45%)]" />
       <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-10">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <div className="inline-flex items-center">
-              <Logo height={72} href="/" withWordmark lightWordmark />
-            </div>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-silver/80">
+            <Logo height={56} href="/" withWordmark lightWordmark />
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-slate-400">
               {SITE.description}
             </p>
-            <div className="mt-6 space-y-2 text-sm text-silver/75">
+            <div className="mt-6 space-y-2 text-sm text-slate-400">
               <p>{SITE.address.full}</p>
               <p>
                 P.O. Box {SITE.address.poBox}, P.C. {SITE.address.postalCode}
@@ -38,38 +36,21 @@ export function Footer() {
                   {SITE.email}
                 </a>
               </p>
-              <p>
-                <a href={`mailto:${SITE.salesEmail}`} className="hover:text-white">
-                  {SITE.salesEmail}
-                </a>
+              <p className="text-xs text-slate-500">C.R. {SITE.crNumber}</p>
+              <p className="pt-2 text-xs font-semibold uppercase tracking-[0.18em] text-amber-400">
+                Emergency: {SITE.emergency}
               </p>
-              <p className="text-xs text-silver/50">C.R. {SITE.crNumber}</p>
             </div>
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-electric-bright">
-              Products
-            </h3>
-            <ul className="mt-5 space-y-2.5">
-              {products.slice(0, 6).map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-silver/75 transition hover:text-white">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="lg:col-span-2">
-            <h3 className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-electric-bright">
+            <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">
               Services
             </h3>
             <ul className="mt-5 space-y-2.5">
               {services.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-silver/75 transition hover:text-white">
+                  <Link href={item.href} className="text-sm text-slate-400 transition hover:text-white">
                     {item.label}
                   </Link>
                 </li>
@@ -77,68 +58,93 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-2">
-            <h3 className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-electric-bright">
-              Company
+          <div className="lg:col-span-3">
+            <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">
+              Divisions
             </h3>
             <ul className="mt-5 space-y-2.5">
-              {[
-                { label: "About", href: "/about" },
-                { label: "Projects", href: "/projects" },
-                { label: "Safety", href: "/safety" },
-                { label: "Careers", href: "/careers" },
-                { label: "Blog", href: "/blog" },
-                { label: "Downloads", href: "/downloads" },
-              ].map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-silver/75 transition hover:text-white">
-                    {item.label}
+              {DIVISIONS.map((d) => (
+                <li key={d.slug}>
+                  <Link href={d.href} className="text-sm text-slate-400 transition hover:text-white">
+                    {d.shortName}
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link href="/products" className="text-sm text-slate-400 transition hover:text-white">
+                  Elevator Products
+                </Link>
+              </li>
+              <li>
+                <Link href="/projects" className="text-sm text-slate-400 transition hover:text-white">
+                  Projects
+                </Link>
+              </li>
             </ul>
           </div>
 
-          <div className="lg:col-span-2">
-            <h3 className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-electric-bright">
+          <div className="lg:col-span-3">
+            <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">
               Connect
             </h3>
             <ul className="mt-5 space-y-2.5">
               <li>
-                <Link href="/contact" className="text-sm text-silver/75 transition hover:text-white">
-                  Contact
+                <Link href="/contact" className="text-sm text-slate-400 transition hover:text-white">
+                  Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/quote" className="inline-flex items-center gap-1 text-sm text-silver/75 transition hover:text-white">
-                  Request Quote <ArrowUpRight className="h-3.5 w-3.5" />
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-sm text-silver/75 transition hover:text-white">
-                  FAQ
+                <Link
+                  href="/quote"
+                  className="inline-flex items-center gap-1 text-sm text-slate-400 transition hover:text-white"
+                >
+                  Request a Proposal <ArrowUpRight className="h-3.5 w-3.5" />
                 </Link>
               </li>
               <li>
                 <a
                   href={SITE.whatsappHref}
-                  className="text-sm text-silver/75 transition hover:text-white"
+                  className="text-sm text-slate-400 transition hover:text-white"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   WhatsApp
                 </a>
               </li>
+              <li>
+                <Link href="/careers" className="text-sm text-slate-400 transition hover:text-white">
+                  Careers
+                </Link>
+              </li>
             </ul>
-            <p className="mt-6 text-xs text-silver/50">Emergency: {SITE.emergency}</p>
+            <form className="mt-6 space-y-2" action="#" method="post">
+              <label htmlFor="newsletter" className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                Newsletter
+              </label>
+              <div className="flex gap-2">
+                <input
+                  id="newsletter"
+                  name="email"
+                  type="email"
+                  placeholder="you@company.com"
+                  className="w-full rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm outline-none focus:border-sky-500"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 rounded-full bg-sky-600 px-4 py-2.5 text-sm font-semibold hover:bg-sky-500"
+                >
+                  Join
+                </button>
+              </div>
+            </form>
           </div>
         </div>
 
         <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 md:flex-row md:items-center md:justify-between">
-          <p className="text-xs text-silver/50">
+          <p className="text-xs text-slate-500">
             © {new Date().getFullYear()} {SITE.legalName}. All rights reserved.
           </p>
-          <div className="flex gap-5 text-xs text-silver/50">
+          <div className="flex gap-5 text-xs text-slate-500">
             <Link href="/privacy" className="hover:text-white">
               Privacy Policy
             </Link>

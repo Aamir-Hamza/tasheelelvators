@@ -1,91 +1,92 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/shared/page-hero";
-import { timeline, values } from "@/lib/data/content";
-import { SITE } from "@/lib/constants";
+import { SITE, DIVISIONS } from "@/lib/constants";
 import { CtaBand } from "@/components/home/cta-band";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: "About Tasheel",
   description:
-    "Learn about Tasheel Elevators—mission, vision, values, and our journey engineering vertical excellence across Oman and the GCC.",
+    "About Tasheel Engineering — specialized engineering design, comprehensive maintenance, and divisions in elevators and CCTV & smart home across Oman and the GCC.",
 };
 
 export default function AboutPage() {
   return (
     <>
       <PageHero
-        title="About Tasheel Elevators"
-        description="A Muscat-born engineering company dedicated to safer, smarter vertical mobility across Oman and the GCC."
+        title="About Tasheel Engineering"
+        description="A Muscat-based engineering company delivering design precision, master maintenance, and specialized division excellence across Oman and the GCC."
         breadcrumbs={[
           { label: "Home", href: "/" },
-          { label: "About" },
+          { label: "About Tasheel" },
         ]}
       />
 
       <section className="py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-electric">Mission</p>
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.28em] text-sky-700">
+              Mission
+            </p>
             <h2 className="mt-4 font-display text-3xl font-bold md:text-4xl">
-              Engineer vertical excellence people can trust
+              Engineer systems people and buildings can trust
             </h2>
             <p className="mt-5 text-muted leading-relaxed">
-              We design, supply, install, and maintain elevators and escalators that meet
-              international safety standards while respecting the climate, codes, and construction
-              realities of the Gulf.
+              We provide specialized engineering design and comprehensive maintenance — then deliver
+              through focused divisions in elevators & escalators and CCTV & smart home systems.
             </p>
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-electric">Vision</p>
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.28em] text-amber-700">
+              Vision
+            </p>
             <h2 className="mt-4 font-display text-3xl font-bold md:text-4xl">
-              The region’s most trusted vertical mobility partner
+              The region’s most trusted engineering partner
             </h2>
             <p className="mt-5 text-muted leading-relaxed">
-              To be the first call for architects, developers, and facility managers who refuse to
-              compromise on safety, uptime, or craftsmanship.
+              To be the first call for developers, architects, and facility managers who need
+              precision design, reliable uptime, and accountable after-sales engineering.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-border bg-light-gray/40 py-20 dark:bg-white/[0.02]">
+      <section className="border-y border-border bg-slate-50 py-20 dark:bg-white/[0.02]">
         <div className="mx-auto max-w-7xl px-6">
-          <h2 className="font-display text-3xl font-bold">Values</h2>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => (
-              <div key={v.title} className="rounded-2xl border border-border bg-card p-6">
-                <h3 className="font-display text-lg font-semibold">{v.title}</h3>
-                <p className="mt-2 text-sm text-muted">{v.description}</p>
-              </div>
+          <h2 className="font-display text-3xl font-bold">Our structure</h2>
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            <div className="rounded-2xl border border-border bg-card p-6 md:col-span-1">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-sky-700">Parent</p>
+              <h3 className="mt-2 font-display text-xl font-semibold">{SITE.name}</h3>
+              <p className="mt-3 text-sm text-muted">
+                Engineering design, consulting, systems auditing, and master maintenance programmes.
+              </p>
+            </div>
+            {DIVISIONS.map((d) => (
+              <Link
+                key={d.slug}
+                href={d.href}
+                className="rounded-2xl border border-border bg-card p-6 transition hover:border-sky-300"
+              >
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-amber-700">
+                  Division
+                </p>
+                <h3 className="mt-2 font-display text-xl font-semibold">{d.shortName}</h3>
+                <p className="mt-3 text-sm text-muted">{d.tagline}</p>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-6">
-          <h2 className="font-display text-3xl font-bold">Company journey</h2>
-          <div className="mt-12 space-y-8 border-l border-electric/40 pl-8">
-            {timeline.map((item) => (
-              <div key={item.year} className="relative">
-                <span className="absolute -left-[39px] top-1 h-3 w-3 rounded-full bg-electric" />
-                <p className="text-sm font-semibold text-electric">{item.year}</p>
-                <h3 className="mt-1 font-display text-xl font-semibold">{item.title}</h3>
-                <p className="mt-2 text-sm text-muted">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-navy-deep py-20 text-white">
+      <section className="bg-slate-950 py-20 text-white">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-xs uppercase tracking-[0.28em] text-electric-bright">CEO Message</p>
+          <p className="font-mono text-xs uppercase tracking-[0.28em] text-sky-300">Leadership</p>
           <blockquote className="mt-6 font-display text-2xl font-semibold leading-snug md:text-3xl">
-            “Every elevator we deliver carries our name. That means safety is non-negotiable,
-            schedules are respected, and service never ends at handover.”
+            “Every system we design or maintain carries the Tasheel name — safety, documentation,
+            and service never end at handover.”
           </blockquote>
-          <p className="mt-6 text-silver/70">Leadership Team · {SITE.legalName}</p>
+          <p className="mt-6 text-slate-400">Leadership Team · {SITE.legalName}</p>
         </div>
       </section>
 

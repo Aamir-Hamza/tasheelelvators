@@ -2,24 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-/** Square brand mark — Elevator letter head-04.png */
 const LOGO_SIZE = 1252;
 
 type LogoProps = {
   className?: string;
-  /** CSS height in px; width stays 1:1 */
   height?: number;
   priority?: boolean;
   href?: string | null;
-  /** Show “Tasheel Elevators” wordmark beside the mark */
   withWordmark?: boolean;
-  /** Adapt wordmark for dark/glass hero header */
   lightWordmark?: boolean;
 };
 
 /**
- * Official Tasheel Elevators letterhead mark.
- * Original artwork only — no recolor or crop.
+ * Tasheel brand mark + Engineering wordmark.
+ * Original logo artwork unchanged.
  */
 export function Logo({
   className,
@@ -32,7 +28,7 @@ export function Logo({
   const image = (
     <Image
       src="/logo.png"
-      alt="Tasheel Elevators Logo"
+      alt="Tasheel Engineering Logo"
       width={LOGO_SIZE}
       height={LOGO_SIZE}
       priority={priority}
@@ -40,9 +36,9 @@ export function Logo({
       sizes="(max-width: 640px) 56px, (max-width: 1024px) 64px, 72px"
       className={cn(
         "aspect-square w-auto object-contain object-center select-none",
-        "drop-shadow-[0_2px_8px_rgba(10,22,40,0.18)]",
+        "drop-shadow-[0_2px_8px_rgba(15,23,42,0.18)]",
         "transition-transform duration-200 ease-out group-hover:scale-[1.03]",
-        !height && "h-12 sm:h-14 md:h-[60px] lg:h-16",
+        !height && "h-11 sm:h-12 md:h-[52px] lg:h-14",
         className
       )}
       style={height ? { height, width: height } : undefined}
@@ -56,19 +52,19 @@ export function Logo({
         <span className="hidden min-[420px]:flex flex-col leading-none">
           <span
             className={cn(
-              "font-display text-[15px] font-bold tracking-[0.04em] sm:text-base lg:text-lg",
-              lightWordmark ? "text-white" : "text-[#2B4169]"
+              "font-display text-[15px] font-extrabold tracking-[0.02em] sm:text-base lg:text-lg",
+              lightWordmark ? "text-white" : "text-[#0F172A]"
             )}
           >
             TASHEEL
           </span>
           <span
             className={cn(
-              "mt-0.5 text-[10px] font-semibold tracking-[0.18em] uppercase sm:text-[11px]",
-              lightWordmark ? "text-[#7EB6E8]" : "text-[#4A89C6]"
+              "mt-0.5 font-mono text-[9px] font-medium tracking-[0.22em] uppercase sm:text-[10px]",
+              lightWordmark ? "text-sky-300" : "text-[#0284C7]"
             )}
           >
-            Elevators
+            Engineering
           </span>
         </span>
       )}
@@ -80,8 +76,8 @@ export function Logo({
   return (
     <Link
       href={href}
-      className="inline-flex shrink-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4A89C6] focus-visible:ring-offset-2"
-      aria-label="Tasheel Elevators home"
+      className="inline-flex shrink-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0284C7] focus-visible:ring-offset-2"
+      aria-label="Tasheel Engineering home"
     >
       {content}
     </Link>

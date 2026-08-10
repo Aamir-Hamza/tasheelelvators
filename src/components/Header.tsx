@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, Phone, MessageCircle } from "lucide-react";
+import Link from "next/link";
+import { Menu, Phone } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Navbar } from "@/components/Navbar";
 import { MobileMenu } from "@/components/MobileMenu";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -45,18 +47,15 @@ export function Header() {
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-all duration-300",
           solid
-            ? "border-b border-[#2B4169]/10 bg-white/95 shadow-[0_8px_30px_rgba(43,65,105,0.10)] backdrop-blur-xl"
-            : "border-b border-transparent bg-[#0a1628]/25 backdrop-blur-md"
+            ? "border-b border-slate-200/80 bg-white/95 shadow-[0_8px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl"
+            : "border-b border-transparent bg-slate-950/20 backdrop-blur-md"
         )}
       >
-        <div className="mx-auto flex h-[84px] max-w-[1400px] items-center justify-between gap-4 px-6 lg:h-[92px]">
-          {/* Brand mark from letterhead */}
+        <div className="mx-auto flex h-[80px] max-w-[1400px] items-center justify-between gap-4 px-6 lg:h-[88px]">
           <Logo priority withWordmark lightWordmark={!solid} />
 
-          {/* Center: Navigation */}
           <Navbar inverted={!solid} />
 
-          {/* Right: Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
             <div
               className="hidden items-center rounded-full border p-0.5 md:flex"
@@ -69,13 +68,13 @@ export function Header() {
                   type="button"
                   onClick={() => handleLangChange(code)}
                   className={cn(
-                    "rounded-full px-2.5 py-1.5 text-xs font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b8fff]",
+                    "rounded-full px-2.5 py-1.5 text-xs font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500",
                     lang === code
                       ? solid
-                        ? "bg-[#2B4169] text-white"
-                        : "bg-white text-[#2B4169]"
+                        ? "bg-slate-900 text-white"
+                        : "bg-white text-slate-900"
                       : solid
-                        ? "text-[#2B4169]/60 hover:text-[#2B4169]"
+                        ? "text-slate-500 hover:text-slate-900"
                         : "text-white/75 hover:text-white"
                   )}
                   aria-pressed={lang === code}
@@ -87,37 +86,40 @@ export function Header() {
 
             <a
               href={SITE.phoneHref}
-              className={cn(
-                "hidden items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition duration-200 hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F57E25] sm:inline-flex",
-                "bg-[#F57E25] text-white shadow-md hover:bg-[#e06f1c] hover:shadow-lg"
-              )}
+              className="hidden items-center gap-2 rounded-full bg-amber-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition duration-200 hover:scale-[1.03] hover:bg-amber-700 sm:inline-flex"
               aria-label="Call Now"
             >
               <Phone className="h-4 w-4" />
-              <span className="hidden lg:inline">Call Now</span>
+              <span className="hidden xl:inline">Call Now</span>
             </a>
 
-            <a
-              href={SITE.whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden items-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-sm font-semibold text-white shadow-md transition duration-200 hover:scale-[1.03] hover:bg-[#1ebe57] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] sm:inline-flex"
-              aria-label="Chat with us on WhatsApp"
+            <WhatsAppButton
+              variant="inline"
+              className="hidden !px-3 !py-2.5 sm:inline-flex xl:!px-4"
+              label="WhatsApp"
+            />
+
+            <Link
+              href="/quote"
+              className={cn(
+                "hidden items-center rounded-full px-4 py-2.5 text-sm font-semibold transition hover:scale-[1.03] lg:inline-flex",
+                solid
+                  ? "bg-slate-900 text-white hover:bg-slate-800"
+                  : "bg-white text-slate-900 hover:bg-slate-100"
+              )}
             >
-              <MessageCircle className="h-4 w-4" />
-              <span className="hidden lg:inline">WhatsApp</span>
-            </a>
+              Request a Proposal
+            </Link>
 
             <button
               type="button"
               className={cn(
-                "inline-flex h-11 w-11 items-center justify-center rounded-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b8fff] xl:hidden",
+                "inline-flex h-11 w-11 items-center justify-center rounded-full transition lg:hidden",
                 solid
-                  ? "border border-black/10 text-[#0a1628] hover:bg-black/[0.04]"
+                  ? "border border-slate-200 text-slate-900 hover:bg-slate-50"
                   : "border border-white/30 text-white hover:bg-white/10"
               )}
               aria-expanded={open}
-              aria-controls="mobile-menu"
               aria-label={open ? "Close menu" : "Open menu"}
               onClick={() => setOpen(true)}
             >

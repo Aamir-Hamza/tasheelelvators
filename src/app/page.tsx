@@ -1,26 +1,20 @@
-import { Hero } from "@/components/home/hero";
-import { AboutPreview } from "@/components/home/about-preview";
-import { ServicesGrid } from "@/components/home/services-grid";
-import { ProductsShowcase } from "@/components/home/products-showcase";
-import { WhyChooseUs } from "@/components/home/why-choose";
-import { ProjectsPreview } from "@/components/home/projects-preview";
-import { ProcessTimeline } from "@/components/home/process-timeline";
-import { ClientsTestimonials } from "@/components/home/clients-testimonials";
-import { FaqPreview } from "@/components/home/faq-preview";
+import { EngineeringHero } from "@/components/sections/engineering-hero";
+import { CoreServicesSection } from "@/components/sections/core-services";
+import { DivisionsSpotlight } from "@/components/sections/divisions-spotlight";
+import { QuoteEstimator } from "@/components/sections/quote-estimator";
+import { ProjectsGallery } from "@/components/sections/projects-gallery";
+import { SafetyBanner } from "@/components/sections/safety-banner";
 import { CtaBand } from "@/components/home/cta-band";
 
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <AboutPreview />
-      <ServicesGrid />
-      <ProductsShowcase />
-      <WhyChooseUs />
-      <ProjectsPreview />
-      <ProcessTimeline />
-      <ClientsTestimonials />
-      <FaqPreview />
+      <EngineeringHero />
+      <CoreServicesSection />
+      <DivisionsSpotlight />
+      <QuoteEstimator />
+      <ProjectsGallery />
+      <SafetyBanner />
       <CtaBand />
     </>
   );

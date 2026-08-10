@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/shared/page-hero";
-import { getService, services } from "@/lib/data/services";
+import { coreServices, getCoreService } from "@/data/services";
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight } from "lucide-react";
 import { CtaBand } from "@/components/home/cta-band";
@@ -10,19 +10,19 @@ import { CtaBand } from "@/components/home/cta-band";
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return services.map((s) => ({ slug: s.slug }));
+  return coreServices.map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = getCoreService(slug);
   if (!service) return {};
   return { title: service.name, description: service.description };
 }
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = getCoreService(slug);
   if (!service) notFound();
 
   return (
@@ -45,7 +45,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 key={item}
                 className="flex items-start gap-3 rounded-2xl border border-border bg-card p-5"
               >
-                <Check className="mt-0.5 h-5 w-5 text-electric" />
+                <Check className="mt-0.5 h-5 w-5 text-sky-600" />
                 <p className="font-medium">{item}</p>
               </div>
             ))}

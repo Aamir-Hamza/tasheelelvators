@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Syne, Manrope } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
@@ -10,33 +10,33 @@ import { SITE } from "@/lib/constants";
 import { JsonLd } from "@/components/seo/json-ld";
 import { GoogleAnalytics } from "@/components/seo/google-analytics";
 
-const syne = Syne({
-  variable: "--font-syne",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const jetbrains = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} | Premium Elevators in Oman & GCC`,
+    default: `${SITE.name} | Engineering Design & Maintenance · Oman & GCC`,
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
   keywords: [
+    "Tasheel Engineering",
+    "engineering design Oman",
+    "maintenance services Muscat",
     "elevator company Oman",
-    "elevator installation Muscat",
-    "elevator maintenance GCC",
-    "escalators Oman",
-    "Tasheel Elevators",
-    "AMC elevators",
-    "hospital elevators Oman",
+    "CCTV smart home Oman",
+    "escalators GCC",
+    "building maintenance AMC",
   ],
   authors: [{ name: SITE.legalName }],
   openGraph: {
@@ -54,13 +54,8 @@ export const metadata: Metadata = {
     description: SITE.description,
     images: ["/og.jpg"],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: SITE.url,
-  },
+  robots: { index: true, follow: true },
+  alternates: { canonical: SITE.url },
 };
 
 export default function RootLayout({
@@ -70,8 +65,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${syne.variable} ${manrope.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+      <body className={`${jakarta.variable} ${jetbrains.variable} antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <SmoothScroll>
             <JsonLd />
             <GoogleAnalytics id={process.env.NEXT_PUBLIC_GA_ID} />
