@@ -6,7 +6,7 @@ export const SITE = {
   tagline: "Precision Engineering. Master Maintenance.",
   description:
     "Tasheel Engineering delivers specialized engineering design and comprehensive maintenance across Oman and the GCC — with dedicated divisions in elevators & escalators and CCTV & smart home systems.",
-  url: "https://tasheelengineering.com",
+  url: "https://www.tasheelevators.com",
   email: "info@tasheelelevators.com",
   salesEmail: "sale@tasheelelevators.com",
   phone: "+968 79123229",
