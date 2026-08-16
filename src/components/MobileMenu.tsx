@@ -39,7 +39,7 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[60] lg:hidden"
+          className="fixed inset-0 z-[60] xl:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -97,6 +97,13 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
                 ))}
               </div>
 
+              <Link
+                href="/login"
+                onClick={onClose}
+                className="flex items-center justify-center rounded-full border border-slate-200 px-5 py-3.5 text-sm font-semibold text-slate-900"
+              >
+                Sign in / Account
+              </Link>
               <Link
                 href="/quote"
                 onClick={onClose}

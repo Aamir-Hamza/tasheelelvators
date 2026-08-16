@@ -2,18 +2,20 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, Phone } from "lucide-react";
+import { Menu, Phone, UserRound } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Navbar } from "@/components/Navbar";
 import { MobileMenu } from "@/components/MobileMenu";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/components/providers/auth-provider";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [lang, setLang] = useState<"en" | "ar">("en");
+  const { user, loading } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -48,17 +50,28 @@ export function Header() {
           "fixed inset-x-0 top-0 z-50 transition-all duration-300",
           solid
             ? "border-b border-slate-200/80 bg-white/95 shadow-[0_8px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl"
-            : "border-b border-transparent bg-slate-950/20 backdrop-blur-md"
+            : "border-b border-transparent bg-slate-950/25 backdrop-blur-md"
         )}
       >
-        <div className="mx-auto flex h-[80px] max-w-[1400px] items-center justify-between gap-4 px-6 lg:h-[88px]">
-          <Logo priority withWordmark lightWordmark={!solid} />
+        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-3 px-4 sm:h-[72px] sm:px-6 lg:h-20 xl:gap-4">
+          {/* Brand */}
+          <div className="min-w-0 shrink">
+            <Logo
+              priority
+              withWordmark
+              lightWordmark={!solid}
+              dynamicBrand
+              className="h-9 sm:h-10 lg:h-11"
+            />
+          </div>
 
+          {/* Desktop nav — xl to avoid crowding with CTAs */}
           <Navbar inverted={!solid} />
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Actions */}
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
             <div
-              className="hidden items-center rounded-full border p-0.5 md:flex"
+              className="hidden items-center rounded-full border p-0.5 xl:flex"
               role="group"
               aria-label="Language switcher"
             >
@@ -84,37 +97,56 @@ export function Header() {
               ))}
             </div>
 
+            {!loading && (
+              <Link
+                href={user ? "/account" : "/login"}
+                className={cn(
+                  "inline-flex h-10 w-10 items-center justify-center rounded-full transition xl:h-auto xl:w-auto xl:gap-2 xl:px-3 xl:py-2",
+                  solid
+                    ? "border border-slate-200 text-slate-800 hover:bg-slate-50"
+                    : "border border-white/25 text-white hover:bg-white/10"
+                )}
+                aria-label={user ? "Account" : "Sign in"}
+              >
+                <UserRound className="h-4 w-4" />
+                <span className="hidden text-sm font-semibold 2xl:inline">
+                  {user ? "Account" : "Sign in"}
+                </span>
+              </Link>
+            )}
+
             <a
               href={SITE.phoneHref}
-              className="hidden items-center gap-2 rounded-full bg-amber-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition duration-200 hover:scale-[1.03] hover:bg-amber-700 sm:inline-flex"
+              className="hidden h-10 w-10 items-center justify-center rounded-full bg-amber-600 text-white shadow-md transition hover:bg-amber-700 xl:inline-flex 2xl:h-auto 2xl:w-auto 2xl:gap-2 2xl:px-3.5 2xl:py-2"
               aria-label="Call Now"
             >
               <Phone className="h-4 w-4" />
-              <span className="hidden xl:inline">Call Now</span>
+              <span className="hidden text-sm font-semibold 2xl:inline">Call Now</span>
             </a>
 
             <WhatsAppButton
               variant="inline"
-              className="hidden !px-3 !py-2.5 sm:inline-flex xl:!px-4"
-              label="WhatsApp"
+              className="hidden !h-10 !w-10 !items-center !justify-center !px-0 !py-0 xl:!inline-flex 2xl:!h-auto 2xl:!w-auto 2xl:!px-3.5 2xl:!py-2"
+              label={<span className="hidden 2xl:inline">WhatsApp</span>}
             />
 
             <Link
               href="/quote"
               className={cn(
-                "hidden items-center rounded-full px-4 py-2.5 text-sm font-semibold transition hover:scale-[1.03] lg:inline-flex",
+                "hidden items-center rounded-full px-3.5 py-2 text-sm font-semibold transition hover:scale-[1.02] lg:inline-flex xl:px-4",
                 solid
                   ? "bg-slate-900 text-white hover:bg-slate-800"
                   : "bg-white text-slate-900 hover:bg-slate-100"
               )}
             >
-              Request a Proposal
+              <span className="xl:hidden">Proposal</span>
+              <span className="hidden xl:inline">Request a Proposal</span>
             </Link>
 
             <button
               type="button"
               className={cn(
-                "inline-flex h-11 w-11 items-center justify-center rounded-full transition lg:hidden",
+                "inline-flex h-10 w-10 items-center justify-center rounded-full transition xl:hidden",
                 solid
                   ? "border border-slate-200 text-slate-900 hover:bg-slate-50"
                   : "border border-white/30 text-white hover:bg-white/10"

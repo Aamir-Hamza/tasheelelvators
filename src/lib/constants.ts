@@ -49,7 +49,7 @@ export const DIVISIONS = [
     slug: "elevators",
     name: "Tasheel Elevators & Escalators",
     shortName: "Elevators & Escalators",
-    href: "/divisions/elevators",
+    href: "/elevators",
     accent: "cyan" as const,
     tagline: "Vertical mobility engineered for safety and performance",
     description:
@@ -64,9 +64,9 @@ export const DIVISIONS = [
   },
   {
     slug: "cctv-smart-home",
-    name: "Tasheel CCTV & Smart Home",
-    shortName: "CCTV & Smart Home",
-    href: "/divisions/cctv-smart-home",
+    name: "Tasheel Smart Systems",
+    shortName: "CCTV & Smart Systems",
+    href: "/cctv-smart-systems",
     accent: "amber" as const,
     tagline: "Intelligent security and connected living",
     description:
@@ -79,6 +79,23 @@ export const DIVISIONS = [
     ],
     cta: "Explore Smart Automation",
   },
+  {
+    slug: "maintenance",
+    name: "Tasheel Maintenance Services",
+    shortName: "Maintenance Services",
+    href: "/maintenance",
+    accent: "slate" as const,
+    tagline: "Predictive AMC and zero-downtime technical care",
+    description:
+      "Proactive annual maintenance contracts for elevators, security systems, and electro-mechanical infrastructure.",
+    highlights: [
+      "Elevator & escalator AMC",
+      "CCTV & access maintenance",
+      "Electro-mechanical care",
+      "24/7 emergency dispatch",
+    ],
+    cta: "Explore Maintenance Portal",
+  },
 ] as const;
 
 export const HEADER_NAV = [
@@ -87,7 +104,7 @@ export const HEADER_NAV = [
     href: "/services",
     children: [
       { label: "Engineering Design & Consulting", href: "/services/engineering-design" },
-      { label: "Comprehensive Maintenance", href: "/services/maintenance" },
+      { label: "Comprehensive Maintenance", href: "/maintenance" },
       { label: "Systems Auditing", href: "/services/systems-auditing" },
       { label: "Emergency Response", href: "/services/emergency" },
     ],
@@ -96,8 +113,9 @@ export const HEADER_NAV = [
     label: "Divisions",
     href: "/divisions",
     children: [
-      { label: "Elevators & Escalators", href: "/divisions/elevators" },
-      { label: "CCTV & Smart Home", href: "/divisions/cctv-smart-home" },
+      { label: "Elevators & Escalators", href: "/elevators" },
+      { label: "CCTV & Smart Systems", href: "/cctv-smart-systems" },
+      { label: "Maintenance Services", href: "/maintenance" },
     ],
   },
   { label: "Projects", href: "/projects" },

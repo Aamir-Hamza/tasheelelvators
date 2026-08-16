@@ -13,11 +13,13 @@ type EngineeringSceneProps = {
   isMobile: boolean;
   activeHotspot: HotspotId | null;
   onHotspotSelect: (id: HotspotId) => void;
+  /** When false, hide HTML hotspot cards (cleaner for hero slider) */
+  showHotspots?: boolean;
 };
 
 function dimFor(active: HotspotId | null, zone: HotspotId) {
   if (!active) return 1;
-  return active === zone ? 1 : 0.22;
+  return active === zone ? 1 : 0;
 }
 
 /** Zone A — multi-story glass spine + elevator + escalator */
@@ -405,6 +407,7 @@ export function EngineeringScene({
   isMobile,
   activeHotspot,
   onHotspotSelect,
+  showHotspots = true,
 }: EngineeringSceneProps) {
   const hub = useRef<THREE.Group>(null);
   const tilt = useRef(new THREE.Vector2(0, 0));
@@ -417,7 +420,7 @@ export function EngineeringScene({
     if (!hub.current) return;
 
     // Continuous slow spin (slows when a zone is focused)
-    const spinSpeed = activeHotspot ? 0.05 : 0.12;
+    const spinSpeed = activeHotspot ? 0.08 : 0.12;
     hub.current.rotation.y += delta * spinSpeed;
 
     // Cursor parallax with maath damping
@@ -436,38 +439,47 @@ export function EngineeringScene({
       <pointLight position={[-2.2, 2.2, 2]} intensity={1.15} color="#0284c7" distance={9} />
       <pointLight position={[2.6, 1.4, 1.8]} intensity={0.95} color="#d97706" distance={8} />
 
-      <group visible={elevI > 0.15}>
-        <BuildingCore simplified={isMobile} intensity={elevI} />
-      </group>
-      <group visible={cctvI > 0.15}>
-        <SmartSystemsRing simplified={isMobile} intensity={cctvI} />
-      </group>
-      <group visible={maintI > 0.15}>
-        <MaintenanceBase simplified={isMobile} intensity={maintI} />
-      </group>
+      {elevI > 0 && (
+        <group>
+          <BuildingCore simplified={isMobile} intensity={elevI} />
+        </group>
+      )}
+      {cctvI > 0 && (
+        <group>
+          <SmartSystemsRing simplified={isMobile} intensity={cctvI} />
+        </group>
+      )}
+      {maintI > 0 && (
+        <group>
+          <MaintenanceBase simplified={isMobile} intensity={maintI} />
+        </group>
+      )}
 
-      {/* Soft material dimming via opacity groups isn't perfect; scale intensity on emissives */}
-      <HotspotOverlay
-        hotspot={HOTSPOTS[0]}
-        active={activeHotspot === "elevator"}
-        dimmed={!!activeHotspot && activeHotspot !== "elevator"}
-        onSelect={onHotspotSelect}
-        position={[0.85, 0.35, 0.85]}
-      />
-      <HotspotOverlay
-        hotspot={HOTSPOTS[1]}
-        active={activeHotspot === "cctv"}
-        dimmed={!!activeHotspot && activeHotspot !== "cctv"}
-        onSelect={onHotspotSelect}
-        position={[1.75, 1.55, 0.7]}
-      />
-      <HotspotOverlay
-        hotspot={HOTSPOTS[2]}
-        active={activeHotspot === "maintenance"}
-        dimmed={!!activeHotspot && activeHotspot !== "maintenance"}
-        onSelect={onHotspotSelect}
-        position={[-0.15, -1.75, 0.95]}
-      />
+      {showHotspots && (
+        <>
+          <HotspotOverlay
+            hotspot={HOTSPOTS[0]}
+            active={activeHotspot === "elevator"}
+            dimmed={!!activeHotspot && activeHotspot !== "elevator"}
+            onSelect={onHotspotSelect}
+            position={[0.85, 0.35, 0.85]}
+          />
+          <HotspotOverlay
+            hotspot={HOTSPOTS[1]}
+            active={activeHotspot === "cctv"}
+            dimmed={!!activeHotspot && activeHotspot !== "cctv"}
+            onSelect={onHotspotSelect}
+            position={[1.75, 1.55, 0.7]}
+          />
+          <HotspotOverlay
+            hotspot={HOTSPOTS[2]}
+            active={activeHotspot === "maintenance"}
+            dimmed={!!activeHotspot && activeHotspot !== "maintenance"}
+            onSelect={onHotspotSelect}
+            position={[-0.15, -1.75, 0.95]}
+          />
+        </>
+      )}
     </group>
   );
 }

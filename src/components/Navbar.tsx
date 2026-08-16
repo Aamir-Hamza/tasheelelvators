@@ -29,7 +29,7 @@ export function Navbar({ onNavigate, variant = "desktop", inverted = false }: Na
                 href={link.href}
                 onClick={onNavigate}
                 className={cn(
-                  "block rounded-xl px-4 py-3 text-lg font-semibold transition-colors",
+                  "block rounded-xl px-4 py-3 text-base font-semibold transition-colors sm:text-lg",
                   active ? "bg-sky-50 text-slate-900" : "text-slate-700 hover:bg-slate-50"
                 )}
                 aria-current={active ? "page" : undefined}
@@ -37,7 +37,7 @@ export function Navbar({ onNavigate, variant = "desktop", inverted = false }: Na
                 {link.label}
               </Link>
               {"children" in link && link.children && (
-                <div className="mb-2 ml-3 space-y-1">
+                <div className="mb-2 ml-2 space-y-1 sm:ml-3">
                   {link.children.map((child) => (
                     <Link
                       key={child.href}
@@ -58,7 +58,10 @@ export function Navbar({ onNavigate, variant = "desktop", inverted = false }: Na
   }
 
   return (
-    <nav aria-label="Primary" className="hidden items-center gap-0.5 lg:flex">
+    <nav
+      aria-label="Primary"
+      className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 xl:flex"
+    >
       {HEADER_NAV.map((link) => {
         const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
         const hasChildren = "children" in link && !!link.children;
@@ -73,7 +76,7 @@ export function Navbar({ onNavigate, variant = "desktop", inverted = false }: Na
             <Link
               href={link.href}
               className={cn(
-                "group relative inline-flex items-center gap-1 px-3 py-2 text-[13px] font-semibold tracking-wide transition-colors duration-200 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500",
+                "group relative inline-flex items-center gap-1 rounded-sm px-2.5 py-2 text-[12px] font-semibold tracking-wide transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 2xl:px-3 2xl:text-[13px]",
                 inverted
                   ? active
                     ? "text-white"
@@ -89,7 +92,7 @@ export function Navbar({ onNavigate, variant = "desktop", inverted = false }: Na
               {hasChildren && <ChevronDown className="h-3.5 w-3.5 opacity-70" />}
               <span
                 className={cn(
-                  "absolute inset-x-3 -bottom-0.5 h-[2px] origin-left rounded-full bg-amber-600 transition-transform duration-300",
+                  "absolute inset-x-2.5 -bottom-0.5 h-[2px] origin-left rounded-full bg-amber-600 transition-transform duration-300",
                   active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                 )}
               />
@@ -104,7 +107,7 @@ export function Navbar({ onNavigate, variant = "desktop", inverted = false }: Na
                   transition={{ duration: 0.18 }}
                   className="absolute left-0 top-full z-50 pt-3"
                 >
-                  <div className="min-w-[260px] rounded-2xl border border-slate-200/80 bg-white p-2 shadow-xl">
+                  <div className="min-w-[240px] rounded-2xl border border-slate-200/80 bg-white p-2 shadow-xl">
                     {link.children.map((child) => (
                       <Link
                         key={child.href}

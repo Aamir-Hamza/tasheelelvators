@@ -14,6 +14,9 @@
   --brand-cyan: #0284c7;
   --brand-amber: #d97706;
   --brand-orange: #d97706;
+  --brand-accent: #00a8e8;
+  --brand-accent-soft: rgba(0, 168, 232, 0.18);
+  --brand-accent-glow: rgba(0, 168, 232, 0.35);
   --electric: #0284c7;
   --electric-bright: #38bdf8;
   --silver: #cbd5e1;

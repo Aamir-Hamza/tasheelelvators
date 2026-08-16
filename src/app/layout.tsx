@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { BrandProvider } from "@/components/providers/brand-provider";
+import { AuthProvider } from "@/components/providers/auth-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { Header } from "@/components/layout/header";
@@ -79,14 +82,20 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${jakarta.variable} ${jetbrains.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <SmoothScroll>
-            <JsonLd />
-            <GoogleAnalytics id={process.env.NEXT_PUBLIC_GA_ID} />
-            <Header />
-            <main id="main">{children}</main>
-            <Footer />
-            <FloatingActions />
-          </SmoothScroll>
+          <Suspense fallback={null}>
+            <BrandProvider>
+              <AuthProvider>
+                <SmoothScroll>
+                  <JsonLd />
+                  <GoogleAnalytics id={process.env.NEXT_PUBLIC_GA_ID} />
+                  <Header />
+                  <main id="main">{children}</main>
+                  <Footer />
+                  <FloatingActions />
+                </SmoothScroll>
+              </AuthProvider>
+            </BrandProvider>
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

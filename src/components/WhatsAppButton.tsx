@@ -3,6 +3,7 @@
 import { MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SITE } from "@/lib/constants";
+import type { ReactNode } from "react";
 
 const DEFAULT_MESSAGE =
   "Hello! I am inquiring about elevator installation and maintenance services.";
@@ -12,7 +13,7 @@ type WhatsAppButtonProps = {
   message?: string;
   className?: string;
   variant?: "fab" | "inline";
-  label?: string;
+  label?: ReactNode;
 };
 
 function digitsOnly(value: string) {

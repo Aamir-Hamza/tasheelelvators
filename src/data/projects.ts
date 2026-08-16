@@ -13,6 +13,8 @@ export type EngineeringProject = {
   year: string;
   summary: string;
   division?: "elevators" | "cctv-smart-home" | "engineering";
+  /** Optional cover image shown in the project card media div */
+  image?: string;
 };
 
 export const engineeringProjects: EngineeringProject[] = [
@@ -24,6 +26,7 @@ export const engineeringProjects: EngineeringProject[] = [
     year: "2024",
     summary: "High-speed passenger and panoramic elevators with destination dispatch for a landmark commercial tower.",
     division: "elevators",
+    image: "/elevator_ecsalator/Gemini_Generated_Image_6wojo6wojo6wojo6.png",
   },
   {
     slug: "royal-care-hospital",
@@ -33,6 +36,7 @@ export const engineeringProjects: EngineeringProject[] = [
     year: "2022",
     summary: "Hospital-code bed elevators with antibacterial finishes and emergency recall modes.",
     division: "elevators",
+    image: "/elevator_ecsalator/Gemini_Generated_Image_ku77kdku77kdku77.png",
   },
   {
     slug: "oasis-city-mall-security",
@@ -42,6 +46,7 @@ export const engineeringProjects: EngineeringProject[] = [
     year: "2024",
     summary: "Enterprise CCTV, AI analytics, and centralized monitoring for a major retail destination.",
     division: "cctv-smart-home",
+    image: "/cctv/hikvision-camera.png",
   },
   {
     slug: "al-bustan-smart-villas",
@@ -51,6 +56,7 @@ export const engineeringProjects: EngineeringProject[] = [
     year: "2023",
     summary: "Integrated smart lighting, climate, access control, and residential CCTV for a luxury villa compound.",
     division: "cctv-smart-home",
+    image: "/cctv/orvibo-smart-lock.png",
   },
   {
     slug: "ministry-mep-design",
@@ -60,6 +66,7 @@ export const engineeringProjects: EngineeringProject[] = [
     year: "2021",
     summary: "Multi-discipline engineering design packages and authority documentation for a government campus.",
     division: "engineering",
+    image: "/projects/ministry-mep-design.png",
   },
   {
     slug: "sahara-hotel-amc",
@@ -69,6 +76,7 @@ export const engineeringProjects: EngineeringProject[] = [
     year: "2023",
     summary: "Full-scope preventive maintenance for guest elevators, service lifts, and outdoor escalators.",
     division: "elevators",
+    image: "/projects/sahara-hotel-amc.png",
   },
 ];
 

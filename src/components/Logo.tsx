@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useBrand } from "@/components/providers/brand-provider";
 
 const LOGO_SIZE = 1252;
 
@@ -11,11 +14,14 @@ type LogoProps = {
   href?: string | null;
   withWordmark?: boolean;
   lightWordmark?: boolean;
+  /** When true, wordmark follows hero/portal brand; otherwise stable chrome brand */
+  dynamicBrand?: boolean;
 };
 
 /**
- * Tasheel brand mark + Engineering wordmark.
- * Original logo artwork unchanged.
+ * Tasheel brand mark + wordmark.
+ * dynamicBrand=true → follows division preview (header)
+ * dynamicBrand=false → stable group/portal chrome (footer)
  */
 export function Logo({
   className,
@@ -24,11 +30,21 @@ export function Logo({
   href = "/",
   withWordmark = false,
   lightWordmark = false,
+  dynamicBrand = false,
 }: LogoProps) {
+  const { brand, chromeBrand } = useBrand();
+  const active = dynamicBrand ? brand : chromeBrand;
+
+  const title = active.name;
+  const subtitle = active.subtitle;
+  const accentClass = lightWordmark ? active.accent.className : "text-[#0284C7]";
+  const aria = active.ariaLabel;
+  const linkHref = href === null ? null : href;
+
   const image = (
     <Image
       src="/logo.png"
-      alt="Tasheel Engineering Logo"
+      alt={aria}
       width={LOGO_SIZE}
       height={LOGO_SIZE}
       priority={priority}
@@ -38,7 +54,7 @@ export function Logo({
         "aspect-square w-auto object-contain object-center select-none",
         "drop-shadow-[0_2px_8px_rgba(15,23,42,0.18)]",
         "transition-transform duration-200 ease-out group-hover:scale-[1.03]",
-        !height && "h-11 sm:h-12 md:h-[52px] lg:h-14",
+        !height && "h-9 sm:h-10 md:h-11 lg:h-12",
         className
       )}
       style={height ? { height, width: height } : undefined}
@@ -46,38 +62,39 @@ export function Logo({
   );
 
   const content = (
-    <span className="group inline-flex items-center gap-3">
+    <span className="group inline-flex max-w-full items-center gap-2 sm:gap-3">
       {image}
       {withWordmark && (
-        <span className="hidden min-[420px]:flex flex-col leading-none">
+        <span className="hidden min-w-0 flex-col leading-none min-[380px]:flex">
           <span
             className={cn(
-              "font-display text-[15px] font-extrabold tracking-[0.02em] sm:text-base lg:text-lg",
+              "font-display text-[13px] font-extrabold tracking-[0.02em] transition-colors duration-300 sm:text-[15px] lg:text-base",
               lightWordmark ? "text-white" : "text-[#0F172A]"
             )}
           >
-            TASHEEL
+            {title}
           </span>
           <span
             className={cn(
-              "mt-0.5 font-mono text-[9px] font-medium tracking-[0.22em] uppercase sm:text-[10px]",
-              lightWordmark ? "text-sky-300" : "text-[#0284C7]"
+              "mt-0.5 max-w-[110px] truncate font-mono text-[7px] font-medium uppercase tracking-[0.14em] transition-colors duration-300 sm:max-w-[160px] sm:text-[8px] md:max-w-[200px] lg:max-w-[220px] lg:text-[9px] xl:max-w-[260px] xl:text-[10px] xl:tracking-[0.16em]",
+              accentClass
             )}
+            title={subtitle}
           >
-            Engineering
+            {subtitle}
           </span>
         </span>
       )}
     </span>
   );
 
-  if (href === null) return content;
+  if (linkHref === null) return content;
 
   return (
     <Link
-      href={href}
-      className="inline-flex shrink-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0284C7] focus-visible:ring-offset-2"
-      aria-label="Tasheel Engineering home"
+      href={linkHref}
+      className="inline-flex shrink-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-accent,#0284C7)] focus-visible:ring-offset-2"
+      aria-label={aria}
     >
       {content}
     </Link>

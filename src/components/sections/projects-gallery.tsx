@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
@@ -67,8 +68,23 @@ export function ProjectsGallery() {
                 exit={{ opacity: 0, scale: 0.98 }}
                 className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]"
               >
-                <div className="aspect-[16/10] bg-gradient-to-br from-slate-800 to-slate-950 relative">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(2,132,199,0.25),transparent_50%)]" />
+                <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-slate-800 to-slate-950">
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className={
+                        project.image.includes("orvibo")
+                          ? "object-cover object-[center_10%]"
+                          : "object-cover"
+                      }
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(2,132,199,0.25),transparent_50%)]" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                   <span className="absolute left-4 top-4 rounded-full bg-black/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-slate-200">
                     {project.category}
                   </span>

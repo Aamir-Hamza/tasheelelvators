@@ -1,22 +1,41 @@
+"use client";
+
 import Link from "next/link";
-import { SITE, DIVISIONS, HEADER_NAV } from "@/lib/constants";
-import { Logo } from "@/components/Logo";
 import { ArrowUpRight } from "lucide-react";
+import { SITE } from "@/lib/constants";
+import { Logo } from "@/components/Logo";
+import { useBrand } from "@/components/providers/brand-provider";
 
 export function Footer() {
-  const services =
-    HEADER_NAV.find((l) => l.label === "Services")?.children ?? [];
+  const { chromeBrand, isPortalPage } = useBrand();
 
   return (
     <footer className="relative overflow-hidden bg-slate-950 text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(2,132,199,0.12),transparent_45%)]" />
+      <div
+        className="absolute inset-0 transition-opacity duration-500"
+        style={{
+          background: `radial-gradient(ellipse at bottom left, ${chromeBrand.accent.soft}, transparent 45%)`,
+        }}
+      />
       <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-10">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Logo height={56} href="/" withWordmark lightWordmark />
+            {/* Footer stays on Group branding during homepage tab preview */}
+            <Logo height={56} href="/" withWordmark lightWordmark dynamicBrand={false} />
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-slate-400">
-              {SITE.description}
+              {chromeBrand.footerAbout}
             </p>
+
+            {isPortalPage && (
+              <Link
+                href={chromeBrand.portalHref}
+                className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+                style={{ borderColor: `${chromeBrand.accent.hex}55` }}
+              >
+                {chromeBrand.portalCtaLabel} <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+            )}
+
             <div className="mt-6 space-y-2 text-sm text-slate-400">
               <p>{SITE.address.full}</p>
               <p>
@@ -43,14 +62,20 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="lg:col-span-2">
-            <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">
-              Services
+          <div className="lg:col-span-5">
+            <h3
+              className="font-mono text-xs font-semibold uppercase tracking-[0.2em]"
+              style={{ color: chromeBrand.accent.hex }}
+            >
+              {isPortalPage ? "Division Quick Links" : "Portals & Links"}
             </h3>
-            <ul className="mt-5 space-y-2.5">
-              {services.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-slate-400 transition hover:text-white">
+            <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
+              {chromeBrand.quickLinks.map((item) => (
+                <li key={`${chromeBrand.id}-${item.label}-${item.href}`}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-slate-400 transition hover:text-white"
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -59,32 +84,10 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3">
-            <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">
-              Divisions
-            </h3>
-            <ul className="mt-5 space-y-2.5">
-              {DIVISIONS.map((d) => (
-                <li key={d.slug}>
-                  <Link href={d.href} className="text-sm text-slate-400 transition hover:text-white">
-                    {d.shortName}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/products" className="text-sm text-slate-400 transition hover:text-white">
-                  Elevator Products
-                </Link>
-              </li>
-              <li>
-                <Link href="/projects" className="text-sm text-slate-400 transition hover:text-white">
-                  Projects
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className="lg:col-span-3">
-            <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">
+            <h3
+              className="font-mono text-xs font-semibold uppercase tracking-[0.2em]"
+              style={{ color: chromeBrand.accent.hex }}
+            >
               Connect
             </h3>
             <ul className="mt-5 space-y-2.5">
@@ -117,26 +120,6 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-            <form className="mt-6 space-y-2" action="#" method="post">
-              <label htmlFor="newsletter" className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
-                Newsletter
-              </label>
-              <div className="flex gap-2">
-                <input
-                  id="newsletter"
-                  name="email"
-                  type="email"
-                  placeholder="you@company.com"
-                  className="w-full rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm outline-none focus:border-sky-500"
-                />
-                <button
-                  type="submit"
-                  className="shrink-0 rounded-full bg-sky-600 px-4 py-2.5 text-sm font-semibold hover:bg-sky-500"
-                >
-                  Join
-                </button>
-              </div>
-            </form>
           </div>
         </div>
 
