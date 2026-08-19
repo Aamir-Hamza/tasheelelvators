@@ -21,6 +21,26 @@ function navLabel(t: (key: string) => string, id: string) {
   return t(`nav.${id}`);
 }
 
+function divisionNavCopy(t: (key: string) => string) {
+  return {
+    elevators: {
+      aria: t("brand.elevators.aria"),
+      subtitle: t("brand.elevators.subtitle"),
+      short: t("brand.elevators.short"),
+    },
+    "smart-systems": {
+      aria: t("brand.smartSystems.aria"),
+      subtitle: t("brand.smartSystems.subtitle"),
+      short: t("brand.smartSystems.short"),
+    },
+    engineering: {
+      aria: t("brand.engineering.aria"),
+      subtitle: t("brand.engineering.subtitle"),
+      short: t("brand.engineering.short"),
+    },
+  };
+}
+
 function DivisionsDropdown({
   inverted,
   onNavigate,
@@ -31,6 +51,7 @@ function DivisionsDropdown({
   const pathname = usePathname();
   const { brandId, setBrandId } = useBrand();
   const { t } = useI18n();
+  const copyById = divisionNavCopy(t);
   const [open, setOpen] = useState(false);
   const active =
     pathname === "/divisions" ||
@@ -84,7 +105,7 @@ function DivisionsDropdown({
             <div className="min-w-[280px] rounded-2xl border border-slate-200/80 bg-white p-2 shadow-xl" role="menu">
               {DIVISION_ORDER.map((id) => {
                 const item = BRANDS_DATA[id];
-                const copy = useTranslatedBrandInline(id, t);
+                const copy = copyById[id];
                 const selected = brandId === id;
                 return (
                   <Link
@@ -115,19 +136,11 @@ function DivisionsDropdown({
   );
 }
 
-function useTranslatedBrandInline(id: "elevators" | "smart-systems" | "engineering", t: (key: string) => string) {
-  const copy = {
-    elevators: { aria: t("brand.elevators.aria"), subtitle: t("brand.elevators.subtitle"), short: t("brand.elevators.short") },
-    "smart-systems": { aria: t("brand.smartSystems.aria"), subtitle: t("brand.smartSystems.subtitle"), short: t("brand.smartSystems.short") },
-    engineering: { aria: t("brand.engineering.aria"), subtitle: t("brand.engineering.subtitle"), short: t("brand.engineering.short") },
-  };
-  return copy[id];
-}
-
 export function Navbar({ onNavigate, variant = "desktop", inverted = false }: NavbarProps) {
   const pathname = usePathname();
   const { brandId, setBrandId } = useBrand();
   const { t } = useI18n();
+  const copyById = divisionNavCopy(t);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   if (variant === "mobile") {
@@ -138,7 +151,7 @@ export function Navbar({ onNavigate, variant = "desktop", inverted = false }: Na
         </p>
         {DIVISION_ORDER.map((id) => {
           const item = BRANDS_DATA[id];
-          const copy = useTranslatedBrandInline(id, t);
+          const copy = copyById[id];
           const selected = brandId === id;
           return (
             <Link
