@@ -12,9 +12,9 @@ export default function SignupPage() {
   return (
     <>
       <PageHero
-        title="Create account"
-        description="Register to request maintenance plans, security audits, and elevator proposals."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Sign up" }]}
+        titleKey="auth.signupTitle"
+        descriptionKey="auth.signupBody"
+        breadcrumbs={[{ labelKey: "common.home", href: "/" }, { labelKey: "auth.create" }]}
       />
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-md px-6">

@@ -24,6 +24,8 @@ const QuoteLeadSchema = new Schema(
 
 export type QuoteLeadDocument = InferSchemaType<typeof QuoteLeadSchema> & {
   _id: mongoose.Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export const QuoteLead: Model<QuoteLeadDocument> =

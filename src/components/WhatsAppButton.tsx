@@ -4,9 +4,7 @@ import { MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SITE } from "@/lib/constants";
 import type { ReactNode } from "react";
-
-const DEFAULT_MESSAGE =
-  "Hello! I am inquiring about elevator installation and maintenance services.";
+import { useI18n } from "@/i18n/LanguageProvider";
 
 type WhatsAppButtonProps = {
   phone?: string;
@@ -33,12 +31,15 @@ export function getWhatsAppUrl(phone: string, message?: string) {
 
 export function WhatsAppButton({
   phone = SITE.whatsappNumber,
-  message = DEFAULT_MESSAGE,
+  message,
   className,
   variant = "fab",
-  label = "WhatsApp",
+  label,
 }: WhatsAppButtonProps) {
-  const href = getWhatsAppUrl(phone, message);
+  const { t } = useI18n();
+  const text = message ?? t("common.whatsappMessage");
+  const href = getWhatsAppUrl(phone, text);
+  const shownLabel = label ?? t("common.whatsapp");
 
   const baseFab =
     "flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_rgba(37,211,102,0.45)] transition-transform duration-200 hover:scale-110 hover:bg-[#1ebe57] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2";
@@ -51,11 +52,11 @@ export function WhatsAppButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat with us on WhatsApp"
+      aria-label={t("common.chatOnWhatsApp")}
       className={cn(variant === "fab" ? baseFab : baseInline, className)}
     >
       <MessageCircle className={variant === "fab" ? "h-7 w-7" : "h-4 w-4"} aria-hidden />
-      {variant === "inline" ? label : null}
+      {variant === "inline" ? shownLabel : null}
     </a>
   );
 }

@@ -12,9 +12,9 @@ export default function QuotePage() {
   return (
     <>
       <PageHero
-        title="Request a Quote"
-        description="Use our capacity-aware calculator for planning ranges, then submit details for an engineer-reviewed proposal."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Quote" }]}
+        titleKey="quote.title"
+        descriptionKey="quote.description"
+        breadcrumbs={[{ labelKey: "common.home", href: "/" }, { labelKey: "nav.quote" }]}
       />
       <section className="py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">

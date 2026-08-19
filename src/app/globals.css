@@ -86,6 +86,20 @@ h4,
   letter-spacing: -0.03em;
 }
 
+html[dir="rtl"] body,
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] .font-display {
+  font-family: var(--font-cairo), var(--font-jakarta), system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+html[dir="rtl"] .font-mono {
+  letter-spacing: 0.06em;
+}
+
 .font-mono {
   font-family: var(--font-mono), ui-monospace, monospace;
 }

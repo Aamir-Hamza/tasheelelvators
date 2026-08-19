@@ -19,13 +19,23 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/divisions/cctv-smart-home",
-        destination: "/cctv-smart-systems",
+        destination: "/smart-systems",
+        permanent: true,
+      },
+      {
+        source: "/cctv-smart-systems",
+        destination: "/smart-systems",
         permanent: true,
       },
       {
         source: "/services/maintenance",
-        destination: "/maintenance",
+        destination: "/engineering",
         permanent: false,
+      },
+      {
+        source: "/maintenance",
+        destination: "/engineering",
+        permanent: true,
       },
     ];
   },

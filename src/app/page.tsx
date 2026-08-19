@@ -1,5 +1,5 @@
-import { HeroSlider } from "@/components/HeroSlider";
-import { CoreServicesSection } from "@/components/sections/core-services";
+import { DynamicHero } from "@/components/home/DynamicHero";
+import { ServicesSection } from "@/components/home/ServicesSection";
 import { DivisionsSpotlight } from "@/components/sections/divisions-spotlight";
 import { QuoteEstimator } from "@/components/sections/quote-estimator";
 import { SmartHomeFeature } from "@/components/sections/smart-home-feature";
@@ -10,9 +10,8 @@ import { CtaBand } from "@/components/home/cta-band";
 export default function HomePage() {
   return (
     <>
-      {/* Image banners already include left-side graphics/text — keep showHtmlCopy off */}
-      <HeroSlider showHtmlCopy={false} />
-      <CoreServicesSection />
+      <DynamicHero />
+      <ServicesSection />
       <DivisionsSpotlight />
       <QuoteEstimator />
       <SmartHomeFeature />

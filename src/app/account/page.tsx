@@ -11,9 +11,9 @@ export default function AccountPage() {
   return (
     <>
       <PageHero
-        title="My account"
-        description="View your profile and submitted plan requests."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Account" }]}
+        titleKey="common.account"
+        descriptionKey="auth.loginBody"
+        breadcrumbs={[{ labelKey: "common.home", href: "/" }, { labelKey: "common.account" }]}
       />
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-3xl px-6">

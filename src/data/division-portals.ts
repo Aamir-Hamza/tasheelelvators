@@ -109,12 +109,12 @@ export const DIVISION_PORTALS: Record<HeroSlideId, DivisionPortal> = {
     contactBlurb:
       "Speak with our vertical transportation specialists for surveys, proposals, and emergency support.",
     quoteHref: "/quote?service=elevators",
-    accentClass: "text-sky-700",
-    accentBtnClass: "bg-sky-600 hover:bg-sky-500",
+    accentClass: "text-slate-800",
+    accentBtnClass: "bg-slate-900 hover:bg-slate-800",
   },
   cctv: {
     id: "cctv",
-    route: "/cctv-smart-systems",
+    route: "/smart-systems",
     title: "Tasheel Smart Systems",
     eyebrow: "CCTV & Security Portal",
     description:
@@ -187,16 +187,16 @@ export const DIVISION_PORTALS: Record<HeroSlideId, DivisionPortal> = {
     contactBlurb:
       "Connect with our Smart Systems team for audits, designs, and rapid security deployments.",
     quoteHref: "/quote?service=security-audit",
-    accentClass: "text-amber-700",
-    accentBtnClass: "bg-amber-600 hover:bg-amber-500",
+    accentClass: "text-cyan-700",
+    accentBtnClass: "bg-cyan-600 hover:bg-cyan-500",
   },
   maintenance: {
     id: "maintenance",
-    route: "/maintenance",
-    title: "Tasheel Maintenance Services",
-    eyebrow: "Technical Care Portal",
+    route: "/engineering",
+    title: "Tasheel Engineering",
+    eyebrow: "Design & Facilities Portal",
     description:
-      "Predictive AMC for elevators, security systems, and electro-mechanical infrastructure — built for uptime, compliance, and fast emergency response.",
+      "Architectural and MEP design plus reliable technical and facilities maintenance — engineered for uptime, compliance, and accountable delivery.",
     heroStats: [
       { value: "320+", label: "Active AMC Contracts" },
       { value: "<15 min", label: "Emergency Response" },
@@ -265,7 +265,7 @@ export const DIVISION_PORTALS: Record<HeroSlideId, DivisionPortal> = {
     contactBlurb:
       "Reach our dispatch desk for AMC enrolment, emergency response, or multi-site facility programmes.",
     quoteHref: "/quote?service=maintenance",
-    accentClass: "text-sky-700",
-    accentBtnClass: "bg-sky-600 hover:bg-sky-500",
+    accentClass: "text-orange-700",
+    accentBtnClass: "bg-orange-600 hover:bg-orange-500",
   },
 };

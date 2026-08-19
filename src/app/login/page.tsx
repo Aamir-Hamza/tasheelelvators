@@ -12,14 +12,14 @@ export default function LoginPage() {
   return (
     <>
       <PageHero
-        title="Sign in"
-        description="Access your Tasheel account to request AMC plans and track submissions."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Sign in" }]}
+        titleKey="auth.loginTitle"
+        descriptionKey="auth.loginBody"
+        breadcrumbs={[{ labelKey: "common.home", href: "/" }, { labelKey: "common.signIn" }]}
       />
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-md px-6">
           <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
-            <Suspense fallback={<p className="text-sm text-muted">Loading…</p>}>
+            <Suspense fallback={<p className="text-sm text-muted">…</p>}>
               <LoginForm />
             </Suspense>
           </div>

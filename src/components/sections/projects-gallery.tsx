@@ -11,9 +11,13 @@ import {
   type ProjectCategory,
 } from "@/data/projects";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { useI18n } from "@/i18n/LanguageProvider";
+import { useFilterLabel } from "@/i18n/useBrandCopy";
 
 export function ProjectsGallery() {
   const [active, setActive] = useState<ProjectCategory>("All");
+  const { t } = useI18n();
+  const filterLabel = useFilterLabel();
   const filtered = useMemo(
     () =>
       active === "All"
@@ -27,16 +31,16 @@ export function ProjectsGallery() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <SectionHeading
-            eyebrow="Projects & Case Studies"
-            title="Work that proves precision"
-            description="Filter across engineering design, maintenance, elevators, and smart security deployments."
+            eyebrow={t("home.projectsEyebrow")}
+            title={t("home.projectsTitle")}
+            description={t("home.projectsDesc")}
             light
           />
           <Link
             href="/projects"
             className="inline-flex items-center gap-1 self-start text-sm font-semibold text-sky-300 hover:text-sky-200"
           >
-            Full portfolio <ArrowUpRight className="h-4 w-4" />
+            {t("home.fullPortfolio")} <ArrowUpRight className="h-4 w-4 rtl:rotate-180" />
           </Link>
         </div>
 
@@ -52,7 +56,7 @@ export function ProjectsGallery() {
                   : "border border-white/15 bg-white/5 text-slate-300 hover:bg-white/10"
               }`}
             >
-              {cat}
+              {filterLabel(cat)}
             </button>
           ))}
         </div>
@@ -85,8 +89,8 @@ export function ProjectsGallery() {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(2,132,199,0.25),transparent_50%)]" />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  <span className="absolute left-4 top-4 rounded-full bg-black/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-slate-200">
-                    {project.category}
+                  <span className="absolute start-4 top-4 rounded-full bg-black/40 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-slate-200">
+                    {filterLabel(project.category)}
                   </span>
                 </div>
                 <div className="p-6">

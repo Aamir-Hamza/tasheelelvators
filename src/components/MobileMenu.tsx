@@ -5,18 +5,20 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Phone, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
-import { Navbar } from "@/components/Navbar";
+import { Navbar } from "@/components/navigation/Navbar";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { SITE } from "@/lib/constants";
+import { useI18n } from "@/i18n/LanguageProvider";
 
 type MobileMenuProps = {
   open: boolean;
   onClose: () => void;
-  lang: "en" | "ar";
-  onLangChange: (lang: "en" | "ar") => void;
 };
 
-export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProps) {
+export function MobileMenu({ open, onClose }: MobileMenuProps) {
+  const { t, isRtl } = useI18n();
+
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -35,6 +37,8 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
+  const offscreen = isRtl ? "-100%" : "100%";
+
   return (
     <AnimatePresence>
       {open && (
@@ -48,19 +52,19 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
           <button
             type="button"
             className="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"
-            aria-label="Close menu overlay"
+            aria-label={t("common.closeMenu")}
             onClick={onClose}
           />
 
           <motion.aside
             role="dialog"
             aria-modal="true"
-            aria-label="Mobile navigation"
-            initial={{ x: "100%" }}
+            aria-label={t("nav.mobilePrimary")}
+            initial={{ x: offscreen }}
             animate={{ x: 0 }}
-            exit={{ x: "100%" }}
+            exit={{ x: offscreen }}
             transition={{ type: "spring", stiffness: 320, damping: 34 }}
-            className="absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-white shadow-2xl"
+            className="absolute inset-y-0 end-0 flex w-full max-w-md flex-col bg-white shadow-2xl"
           >
             <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
               <Logo height={48} href="/" withWordmark />
@@ -68,7 +72,7 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
                 type="button"
                 onClick={onClose}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 text-slate-900"
-                aria-label="Close menu"
+                aria-label={t("common.closeMenu")}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -79,43 +83,27 @@ export function MobileMenu({ open, onClose, lang, onLangChange }: MobileMenuProp
             </div>
 
             <div className="space-y-3 border-t border-slate-100 px-6 py-5">
-              <div className="flex gap-2" role="group" aria-label="Language">
-                {(["en", "ar"] as const).map((code) => (
-                  <button
-                    key={code}
-                    type="button"
-                    onClick={() => onLangChange(code)}
-                    className={`flex-1 rounded-full px-3 py-2.5 text-sm font-semibold transition ${
-                      lang === code
-                        ? "bg-slate-900 text-white"
-                        : "border border-slate-200 text-slate-900"
-                    }`}
-                    aria-pressed={lang === code}
-                  >
-                    {code === "en" ? "English" : "العربية"}
-                  </button>
-                ))}
-              </div>
+              <LanguageSwitcher solid fullWidth className="flex" />
 
               <Link
                 href="/login"
                 onClick={onClose}
                 className="flex items-center justify-center rounded-full border border-slate-200 px-5 py-3.5 text-sm font-semibold text-slate-900"
               >
-                Sign in / Account
+                {t("common.signInAccount")}
               </Link>
               <Link
                 href="/quote"
                 onClick={onClose}
                 className="flex items-center justify-center rounded-full bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white"
               >
-                Request a Proposal
+                {t("common.requestProposal")}
               </Link>
               <a
                 href={SITE.phoneHref}
                 className="flex items-center justify-center gap-2 rounded-full bg-amber-600 px-5 py-3.5 text-sm font-semibold text-white"
               >
-                <Phone className="h-4 w-4" /> Call Now
+                <Phone className="h-4 w-4" /> {t("common.callNow")}
               </a>
               <WhatsAppButton variant="inline" className="w-full" />
             </div>

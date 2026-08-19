@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Suspense } from "react";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono, Cairo } from "next/font/google";
 import "./globals.css";
-import { BrandProvider } from "@/components/providers/brand-provider";
+import { BrandProvider } from "@/context/BrandContext";
 import { AuthProvider } from "@/components/providers/auth-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
@@ -12,6 +13,8 @@ import { FloatingActions } from "@/components/shared/floating-actions";
 import { SITE } from "@/lib/constants";
 import { JsonLd } from "@/components/seo/json-ld";
 import { GoogleAnalytics } from "@/components/seo/google-analytics";
+import { LanguageProvider } from "@/i18n/LanguageProvider";
+import { isLocale, LANG_COOKIE, localeDir, type Locale } from "@/i18n/config";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -23,6 +26,12 @@ const jetbrains = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+});
+
+const cairo = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -73,30 +82,42 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const raw = cookieStore.get(LANG_COOKIE)?.value;
+  const locale: Locale = isLocale(raw) ? raw : "en";
+
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${jakarta.variable} ${jetbrains.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <Suspense fallback={null}>
-            <BrandProvider>
-              <AuthProvider>
-                <SmoothScroll>
-                  <JsonLd />
-                  <GoogleAnalytics id={process.env.NEXT_PUBLIC_GA_ID} />
-                  <Header />
-                  <main id="main">{children}</main>
-                  <Footer />
-                  <FloatingActions />
-                </SmoothScroll>
-              </AuthProvider>
-            </BrandProvider>
-          </Suspense>
-        </ThemeProvider>
+    <html
+      lang={locale === "ar" ? "ar" : "en"}
+      dir={localeDir(locale)}
+      data-locale={locale}
+      className={`${jakarta.variable} ${jetbrains.variable} ${cairo.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="antialiased">
+        <LanguageProvider initialLocale={locale}>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+            <Suspense fallback={null}>
+              <BrandProvider>
+                <AuthProvider>
+                  <SmoothScroll>
+                    <JsonLd />
+                    <GoogleAnalytics id={process.env.NEXT_PUBLIC_GA_ID} />
+                    <Header />
+                    <main id="main">{children}</main>
+                    <Footer />
+                    <FloatingActions />
+                  </SmoothScroll>
+                </AuthProvider>
+              </BrandProvider>
+            </Suspense>
+          </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -3,23 +3,37 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2, CheckCircle2 } from "lucide-react";
+import { useI18n } from "@/i18n/LanguageProvider";
 
-const schema = z.object({
-  name: z.string().min(2, "Please enter your name"),
-  email: z.string().email("Enter a valid email"),
-  phone: z.string().min(8, "Enter a valid phone number"),
-  company: z.string().optional(),
-  subject: z.string().min(2, "Please add a subject"),
-  message: z.string().min(10, "Message should be at least 10 characters"),
-});
-
-type FormValues = z.infer<typeof schema>;
+type FormValues = {
+  name: string;
+  email: string;
+  phone: string;
+  company?: string;
+  subject: string;
+  message: string;
+};
 
 export function ContactForm() {
+  const { t } = useI18n();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(2, t("quote.enterName")),
+        email: z.string().email(t("quote.enterEmail")),
+        phone: z.string().min(8, t("quote.enterPhone")),
+        company: z.string().optional(),
+        subject: z.string().min(2, t("contact.addSubject")),
+        message: z.string().min(10, t("contact.messageMin")),
+      }),
+    [t]
+  );
+
   const {
     register,
     handleSubmit,
@@ -47,10 +61,10 @@ export function ContactForm() {
     return (
       <div className="flex flex-col items-center justify-center rounded-3xl border border-border bg-card p-10 text-center">
         <CheckCircle2 className="h-12 w-12 text-electric" />
-        <h3 className="mt-4 font-display text-2xl font-semibold">Message sent</h3>
-        <p className="mt-2 text-muted">Our team will respond within one business day.</p>
+        <h3 className="mt-4 font-display text-2xl font-semibold">{t("contact.sentTitle")}</h3>
+        <p className="mt-2 text-muted">{t("contact.sentBody")}</p>
         <Button className="mt-6" onClick={() => setStatus("idle")}>
-          Send another
+          {t("contact.sendAnother")}
         </Button>
       </div>
     );
@@ -59,31 +73,29 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 rounded-3xl border border-border bg-card p-6 md:p-8">
       <div className="grid gap-5 md:grid-cols-2">
-        <Field label="Full name" error={errors.name?.message}>
-          <input {...register("name")} className={inputClass} placeholder="Your name" />
+        <Field label={t("quote.fullName")} error={errors.name?.message}>
+          <input {...register("name")} className={inputClass} placeholder={t("contact.namePh")} />
         </Field>
-        <Field label="Email" error={errors.email?.message}>
-          <input {...register("email")} type="email" className={inputClass} placeholder="you@company.com" />
+        <Field label={t("quote.email")} error={errors.email?.message}>
+          <input {...register("email")} type="email" className={inputClass} placeholder={t("contact.emailPh")} />
         </Field>
-        <Field label="Phone" error={errors.phone?.message}>
-          <input {...register("phone")} className={inputClass} placeholder="+968 ..." />
+        <Field label={t("quote.phone")} error={errors.phone?.message}>
+          <input {...register("phone")} className={inputClass} placeholder={t("contact.phonePh")} />
         </Field>
-        <Field label="Company" error={errors.company?.message}>
-          <input {...register("company")} className={inputClass} placeholder="Company name" />
+        <Field label={t("contact.company")} error={errors.company?.message}>
+          <input {...register("company")} className={inputClass} placeholder={t("contact.companyPh")} />
         </Field>
       </div>
-      <Field label="Subject" error={errors.subject?.message}>
-        <input {...register("subject")} className={inputClass} placeholder="How can we help?" />
+      <Field label={t("contact.subject")} error={errors.subject?.message}>
+        <input {...register("subject")} className={inputClass} placeholder={t("contact.subjectPh")} />
       </Field>
-      <Field label="Message" error={errors.message?.message}>
-        <textarea {...register("message")} rows={5} className={inputClass} placeholder="Project details, location, timeline..." />
+      <Field label={t("contact.message")} error={errors.message?.message}>
+        <textarea {...register("message")} rows={5} className={inputClass} placeholder={t("contact.messagePh")} />
       </Field>
-      {status === "error" && (
-        <p className="text-sm text-red-500">Something went wrong. Please try again or call us.</p>
-      )}
+      {status === "error" && <p className="text-sm text-red-500">{t("contact.failedRetry")}</p>}
       <Button type="submit" size="lg" disabled={status === "loading"} className="w-full md:w-auto">
         {status === "loading" ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-        Send Message
+        {t("contact.send")}
       </Button>
     </form>
   );

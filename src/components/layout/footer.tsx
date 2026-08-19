@@ -5,42 +5,71 @@ import { ArrowUpRight } from "lucide-react";
 import { SITE } from "@/lib/constants";
 import { Logo } from "@/components/Logo";
 import { useBrand } from "@/components/providers/brand-provider";
+import { useI18n } from "@/i18n/LanguageProvider";
+import { useTranslatedBrand } from "@/i18n/useBrandCopy";
+
+const LINK_KEYS: Record<string, string> = {
+  "/elevators": "footer.elevatorsPortal",
+  "/smart-systems": "footer.smartPortal",
+  "/engineering": "footer.engineeringPortal",
+  "/projects": "footer.projects",
+  "/quote": "footer.requestProposal",
+  "/products": "footer.elevatorModels",
+  "/elevators#solutions": "footer.installation",
+  "/elevators#projects": "footer.projectsGallery",
+  "/elevators#amc": "footer.amcPlans",
+  "/quote?service=elevators": "footer.requestQuote",
+  "/smart-systems#solutions": "footer.cctvProducts",
+  "/smart-systems#projects": "footer.caseStudies",
+  "/quote?service=security-audit": "footer.securityAudit",
+  "/smart-systems#contact": "footer.contactSecurity",
+  "/services/engineering-design": "footer.designServices",
+  "/engineering#amc": "footer.facilities",
+  "/engineering#contact": "footer.emergencyResponse",
+  "/quote?service=maintenance": "footer.requestMaintenance",
+};
+
+function footerLinkLabel(href: string, fallback: string, t: (key: string) => string) {
+  const key = LINK_KEYS[href];
+  if (!key) return fallback;
+  const value = t(key);
+  return value === key ? fallback : value;
+}
 
 export function Footer() {
-  const { chromeBrand, isPortalPage } = useBrand();
+  const { footerBrand, isPortalPage } = useBrand();
+  const { t } = useI18n();
+  const copy = useTranslatedBrand(footerBrand.id);
+  const about = footerBrand.id === "group" ? copy.about : copy.footerAbout;
+  const portalCta = footerBrand.id === "group" ? copy.cta : copy.portalCta;
 
   return (
     <footer className="relative overflow-hidden bg-slate-950 text-white">
       <div
         className="absolute inset-0 transition-opacity duration-500"
         style={{
-          background: `radial-gradient(ellipse at bottom left, ${chromeBrand.accent.soft}, transparent 45%)`,
+          background: `radial-gradient(ellipse at bottom left, ${footerBrand.accent.soft}, transparent 45%)`,
         }}
       />
       <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-10">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            {/* Footer stays on Group branding during homepage tab preview */}
             <Logo height={56} href="/" withWordmark lightWordmark dynamicBrand={false} />
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-slate-400">
-              {chromeBrand.footerAbout}
-            </p>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-slate-400">{about}</p>
 
             {isPortalPage && (
               <Link
-                href={chromeBrand.portalHref}
+                href={footerBrand.portalHref}
                 className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
-                style={{ borderColor: `${chromeBrand.accent.hex}55` }}
+                style={{ borderColor: `${footerBrand.accent.hex}55` }}
               >
-                {chromeBrand.portalCtaLabel} <ArrowUpRight className="h-3.5 w-3.5" />
+                {portalCta} <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             )}
 
             <div className="mt-6 space-y-2 text-sm text-slate-400">
-              <p>{SITE.address.full}</p>
-              <p>
-                P.O. Box {SITE.address.poBox}, P.C. {SITE.address.postalCode}
-              </p>
+              <p>{t("contact.address")}</p>
+              <p>{t("common.poBox", { box: SITE.address.poBox, code: SITE.address.postalCode })}</p>
               <p>
                 <a href={SITE.phoneHref} className="hover:text-white">
                   {SITE.phone}
@@ -55,9 +84,9 @@ export function Footer() {
                   {SITE.email}
                 </a>
               </p>
-              <p className="text-xs text-slate-500">C.R. {SITE.crNumber}</p>
+              <p className="text-xs text-slate-500">{t("common.cr", { number: SITE.crNumber })}</p>
               <p className="pt-2 text-xs font-semibold uppercase tracking-[0.18em] text-amber-400">
-                Emergency: {SITE.emergency}
+                {t("common.emergency")}: {SITE.emergency}
               </p>
             </div>
           </div>
@@ -65,18 +94,18 @@ export function Footer() {
           <div className="lg:col-span-5">
             <h3
               className="font-mono text-xs font-semibold uppercase tracking-[0.2em]"
-              style={{ color: chromeBrand.accent.hex }}
+              style={{ color: footerBrand.accent.hex }}
             >
-              {isPortalPage ? "Division Quick Links" : "Portals & Links"}
+              {isPortalPage ? t("footer.divisionLinks") : t("footer.quickLinks")}
             </h3>
             <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
-              {chromeBrand.quickLinks.map((item) => (
-                <li key={`${chromeBrand.id}-${item.label}-${item.href}`}>
+              {footerBrand.quickLinks.map((item) => (
+                <li key={`${footerBrand.id}-${item.href}-${item.label}`}>
                   <Link
                     href={item.href}
                     className="text-sm text-slate-400 transition hover:text-white"
                   >
-                    {item.label}
+                    {footerLinkLabel(item.href, item.label, t)}
                   </Link>
                 </li>
               ))}
@@ -86,14 +115,14 @@ export function Footer() {
           <div className="lg:col-span-3">
             <h3
               className="font-mono text-xs font-semibold uppercase tracking-[0.2em]"
-              style={{ color: chromeBrand.accent.hex }}
+              style={{ color: footerBrand.accent.hex }}
             >
-              Connect
+              {t("footer.connect")}
             </h3>
             <ul className="mt-5 space-y-2.5">
               <li>
                 <Link href="/contact" className="text-sm text-slate-400 transition hover:text-white">
-                  Contact Us
+                  {t("footer.contact")}
                 </Link>
               </li>
               <li>
@@ -101,7 +130,7 @@ export function Footer() {
                   href="/quote"
                   className="inline-flex items-center gap-1 text-sm text-slate-400 transition hover:text-white"
                 >
-                  Request a Proposal <ArrowUpRight className="h-3.5 w-3.5" />
+                  {t("common.requestProposal")} <ArrowUpRight className="h-3.5 w-3.5" />
                 </Link>
               </li>
               <li>
@@ -111,12 +140,12 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  WhatsApp
+                  {t("common.whatsapp")}
                 </a>
               </li>
               <li>
                 <Link href="/careers" className="text-sm text-slate-400 transition hover:text-white">
-                  Careers
+                  {t("footer.careers")}
                 </Link>
               </li>
             </ul>
@@ -125,14 +154,14 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 md:flex-row md:items-center md:justify-between">
           <p className="text-xs text-slate-500">
-            © {new Date().getFullYear()} {SITE.legalName}. All rights reserved.
+            © {new Date().getFullYear()} {SITE.legalName}. {t("common.rights")}
           </p>
           <div className="flex gap-5 text-xs text-slate-500">
             <Link href="/privacy" className="hover:text-white">
-              Privacy Policy
+              {t("common.privacy")}
             </Link>
             <Link href="/terms" className="hover:text-white">
-              Terms of Service
+              {t("common.terms")}
             </Link>
           </div>
         </div>

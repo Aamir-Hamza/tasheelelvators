@@ -5,9 +5,11 @@ import Link from "next/link";
 import { projects, projectCategories } from "@/lib/data/projects";
 import { ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useFilterLabel } from "@/i18n/useBrandCopy";
 
 export function ProjectFilters() {
   const [active, setActive] = useState<(typeof projectCategories)[number]>("All");
+  const filterLabel = useFilterLabel();
   const filtered = useMemo(
     () => (active === "All" ? projects : projects.filter((p) => p.category === active)),
     [active]
@@ -27,7 +29,7 @@ export function ProjectFilters() {
                 : "border border-border bg-card text-muted hover:text-foreground"
             }`}
           >
-            {cat}
+            {filterLabel(cat)}
           </button>
         ))}
       </div>
@@ -49,8 +51,8 @@ export function ProjectFilters() {
               >
                 <div className="aspect-[16/10] bg-gradient-to-br from-navy to-navy-deep relative">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(27,143,255,0.25),transparent_50%)]" />
-                  <span className="absolute left-4 top-4 rounded-full bg-black/40 px-3 py-1 text-xs text-silver">
-                    {project.category}
+                  <span className="absolute start-4 top-4 rounded-full bg-black/40 px-3 py-1 text-xs text-silver">
+                    {filterLabel(project.category)}
                   </span>
                 </div>
                 <div className="p-6">

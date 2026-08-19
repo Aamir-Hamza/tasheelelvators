@@ -4,18 +4,21 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, Phone, UserRound } from "lucide-react";
 import { Logo } from "@/components/Logo";
-import { Navbar } from "@/components/Navbar";
+import { Navbar } from "@/components/navigation/Navbar";
+import { TopBrandBar } from "@/components/navigation/TopBrandBar";
 import { MobileMenu } from "@/components/MobileMenu";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/providers/auth-provider";
+import { useI18n } from "@/i18n/LanguageProvider";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState<"en" | "ar">("en");
   const { user, loading } = useAuth();
+  const { t } = useI18n();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -23,23 +26,6 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem("tasheel-lang");
-    if (stored === "ar" || stored === "en") setLang(stored);
-  }, []);
-
-  function handleLangChange(next: "en" | "ar") {
-    setLang(next);
-    window.localStorage.setItem("tasheel-lang", next);
-    document.documentElement.lang = next === "ar" ? "ar" : "en";
-    document.documentElement.dir = next === "ar" ? "rtl" : "ltr";
-  }
-
-  useEffect(() => {
-    document.documentElement.lang = lang === "ar" ? "ar" : "en";
-    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-  }, [lang]);
 
   const solid = scrolled || open;
 
@@ -50,11 +36,11 @@ export function Header() {
           "fixed inset-x-0 top-0 z-50 transition-all duration-300",
           solid
             ? "border-b border-slate-200/80 bg-white/95 shadow-[0_8px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl"
-            : "border-b border-transparent bg-slate-950/25 backdrop-blur-md"
+            : "border-b border-transparent bg-slate-950/30 backdrop-blur-md"
         )}
       >
+        <TopBrandBar inverted={!solid} />
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-3 px-4 sm:h-[72px] sm:px-6 lg:h-20 xl:gap-4">
-          {/* Brand */}
           <div className="min-w-0 shrink">
             <Logo
               priority
@@ -65,37 +51,10 @@ export function Header() {
             />
           </div>
 
-          {/* Desktop nav — xl to avoid crowding with CTAs */}
           <Navbar inverted={!solid} />
 
-          {/* Actions */}
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            <div
-              className="hidden items-center rounded-full border p-0.5 xl:flex"
-              role="group"
-              aria-label="Language switcher"
-            >
-              {(["en", "ar"] as const).map((code) => (
-                <button
-                  key={code}
-                  type="button"
-                  onClick={() => handleLangChange(code)}
-                  className={cn(
-                    "rounded-full px-2.5 py-1.5 text-xs font-semibold transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500",
-                    lang === code
-                      ? solid
-                        ? "bg-slate-900 text-white"
-                        : "bg-white text-slate-900"
-                      : solid
-                        ? "text-slate-500 hover:text-slate-900"
-                        : "text-white/75 hover:text-white"
-                  )}
-                  aria-pressed={lang === code}
-                >
-                  {code === "en" ? "EN" : "AR"}
-                </button>
-              ))}
-            </div>
+            <LanguageSwitcher solid={solid} />
 
             {!loading && (
               <Link
@@ -106,11 +65,11 @@ export function Header() {
                     ? "border border-slate-200 text-slate-800 hover:bg-slate-50"
                     : "border border-white/25 text-white hover:bg-white/10"
                 )}
-                aria-label={user ? "Account" : "Sign in"}
+                aria-label={user ? t("common.account") : t("common.signIn")}
               >
                 <UserRound className="h-4 w-4" />
                 <span className="hidden text-sm font-semibold 2xl:inline">
-                  {user ? "Account" : "Sign in"}
+                  {user ? t("common.account") : t("common.signIn")}
                 </span>
               </Link>
             )}
@@ -118,16 +77,16 @@ export function Header() {
             <a
               href={SITE.phoneHref}
               className="hidden h-10 w-10 items-center justify-center rounded-full bg-amber-600 text-white shadow-md transition hover:bg-amber-700 xl:inline-flex 2xl:h-auto 2xl:w-auto 2xl:gap-2 2xl:px-3.5 2xl:py-2"
-              aria-label="Call Now"
+              aria-label={t("common.callNow")}
             >
               <Phone className="h-4 w-4" />
-              <span className="hidden text-sm font-semibold 2xl:inline">Call Now</span>
+              <span className="hidden text-sm font-semibold 2xl:inline">{t("common.callNow")}</span>
             </a>
 
             <WhatsAppButton
               variant="inline"
               className="hidden !h-10 !w-10 !items-center !justify-center !px-0 !py-0 xl:!inline-flex 2xl:!h-auto 2xl:!w-auto 2xl:!px-3.5 2xl:!py-2"
-              label={<span className="hidden 2xl:inline">WhatsApp</span>}
+              label={<span className="hidden 2xl:inline">{t("common.whatsapp")}</span>}
             />
 
             <Link
@@ -139,8 +98,8 @@ export function Header() {
                   : "bg-white text-slate-900 hover:bg-slate-100"
               )}
             >
-              <span className="xl:hidden">Proposal</span>
-              <span className="hidden xl:inline">Request a Proposal</span>
+              <span className="xl:hidden">{t("common.proposal")}</span>
+              <span className="hidden xl:inline">{t("common.requestProposal")}</span>
             </Link>
 
             <button
@@ -152,7 +111,7 @@ export function Header() {
                   : "border border-white/30 text-white hover:bg-white/10"
               )}
               aria-expanded={open}
-              aria-label={open ? "Close menu" : "Open menu"}
+              aria-label={open ? t("common.closeMenu") : t("common.openMenu")}
               onClick={() => setOpen(true)}
             >
               <Menu className="h-5 w-5" />
@@ -161,12 +120,7 @@ export function Header() {
         </div>
       </header>
 
-      <MobileMenu
-        open={open}
-        onClose={() => setOpen(false)}
-        lang={lang}
-        onLangChange={handleLangChange}
-      />
+      <MobileMenu open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

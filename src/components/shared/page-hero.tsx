@@ -3,19 +3,35 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/LanguageProvider";
+
+type Crumb = { label?: string; labelKey?: string; href?: string };
 
 type Props = {
-  title: string;
+  title?: string;
+  titleKey?: string;
   description?: string;
-  breadcrumbs?: { label: string; href?: string }[];
+  descriptionKey?: string;
+  breadcrumbs?: Crumb[];
   className?: string;
 };
 
-export function PageHero({ title, description, breadcrumbs, className }: Props) {
+export function PageHero({
+  title,
+  titleKey,
+  description,
+  descriptionKey,
+  breadcrumbs,
+  className,
+}: Props) {
+  const { t } = useI18n();
+  const heading = titleKey ? t(titleKey) : title ?? "";
+  const body = descriptionKey ? t(descriptionKey) : description;
+
   return (
     <section
       className={cn(
-        "relative overflow-hidden bg-navy-deep pt-32 pb-20 md:pt-40 md:pb-28",
+        "relative overflow-hidden bg-navy-deep pt-36 pb-20 md:pt-44 md:pb-28",
         className
       )}
     >
@@ -25,18 +41,21 @@ export function PageHero({ title, description, breadcrumbs, className }: Props) 
         {breadcrumbs && (
           <nav aria-label="Breadcrumb" className="mb-8">
             <ol className="flex flex-wrap items-center gap-2 text-sm text-silver/70">
-              {breadcrumbs.map((crumb, i) => (
-                <li key={crumb.label} className="flex items-center gap-2">
-                  {i > 0 && <span aria-hidden>/</span>}
-                  {crumb.href ? (
-                    <Link href={crumb.href} className="hover:text-white transition-colors">
-                      {crumb.label}
-                    </Link>
-                  ) : (
-                    <span className="text-white">{crumb.label}</span>
-                  )}
-                </li>
-              ))}
+              {breadcrumbs.map((crumb, i) => {
+                const label = crumb.labelKey ? t(crumb.labelKey) : crumb.label ?? "";
+                return (
+                  <li key={`${label}-${i}`} className="flex items-center gap-2">
+                    {i > 0 && <span aria-hidden>/</span>}
+                    {crumb.href ? (
+                      <Link href={crumb.href} className="hover:text-white transition-colors">
+                        {label}
+                      </Link>
+                    ) : (
+                      <span className="text-white">{label}</span>
+                    )}
+                  </li>
+                );
+              })}
             </ol>
           </nav>
         )}
@@ -46,16 +65,16 @@ export function PageHero({ title, description, breadcrumbs, className }: Props) 
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="font-display text-4xl font-bold text-white sm:text-5xl md:text-6xl"
         >
-          {title}
+          {heading}
         </motion.h1>
-        {description && (
+        {body && (
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="mt-5 max-w-2xl text-lg text-silver/85"
           >
-            {description}
+            {body}
           </motion.p>
         )}
       </div>

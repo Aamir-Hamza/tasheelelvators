@@ -13,9 +13,9 @@ export default function ProjectsPage() {
   return (
     <>
       <PageHero
-        title="Projects"
-        description="A portfolio of vertical mobility systems delivered for Oman’s most demanding buildings."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]}
+        titleKey="projects.title"
+        descriptionKey="projects.description"
+        breadcrumbs={[{ labelKey: "common.home", href: "/" }, { labelKey: "nav.projects" }]}
       />
       <section className="py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">

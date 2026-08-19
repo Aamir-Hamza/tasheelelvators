@@ -23,12 +23,17 @@ export function JsonLd() {
       {
         "@type": "Organization",
         name: "Tasheel Elevators & Escalators",
-        url: `${SITE.url}/divisions/elevators`,
+        url: `${SITE.url}/elevators`,
       },
       {
         "@type": "Organization",
-        name: "Tasheel CCTV & Smart Home",
-        url: `${SITE.url}/divisions/cctv-smart-home`,
+        name: "Tasheel Smart Systems",
+        url: `${SITE.url}/smart-systems`,
+      },
+      {
+        "@type": "Organization",
+        name: "Tasheel Engineering",
+        url: `${SITE.url}/engineering`,
       },
     ],
     contactPoint: [

@@ -5,11 +5,13 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/components/providers/auth-provider";
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/i18n/LanguageProvider";
 
 export function SignupForm() {
   const router = useRouter();
   const search = useSearchParams();
   const { refresh } = useAuth();
+  const { t } = useI18n();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -34,14 +36,14 @@ export function SignupForm() {
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {
-        setError(data.error || "Signup failed");
+        setError(data.error || t("auth.signupFailed"));
         return;
       }
       await refresh();
       router.push(next);
       router.refresh();
     } catch {
-      setError("Network error. Please try again.");
+      setError(t("auth.network"));
     } finally {
       setLoading(false);
     }
@@ -51,11 +53,11 @@ export function SignupForm() {
     <form onSubmit={onSubmit} className="space-y-4">
       {(
         [
-          ["name", "Full name", "text"],
-          ["email", "Email", "email"],
-          ["phone", "Phone", "tel"],
-          ["company", "Company (optional)", "text"],
-          ["password", "Password (min 8 chars)", "password"],
+          ["name", t("quote.fullName"), "text"],
+          ["email", t("auth.email"), "email"],
+          ["phone", t("quote.phone"), "tel"],
+          ["company", t("auth.companyOptional"), "text"],
+          ["password", t("auth.passwordMin"), "password"],
         ] as const
       ).map(([key, label, type]) => (
         <div key={key}>
@@ -75,12 +77,12 @@ export function SignupForm() {
       ))}
       {error && <p className="text-sm text-red-600">{error}</p>}
       <Button type="submit" disabled={loading} className="w-full rounded-full">
-        {loading ? "Creating account…" : "Create account"}
+        {loading ? t("auth.creating") : t("auth.create")}
       </Button>
       <p className="text-center text-sm text-slate-500">
-        Already registered?{" "}
+        {t("auth.already")}{" "}
         <Link href={`/login?next=${encodeURIComponent(next)}`} className="font-semibold text-sky-700">
-          Sign in
+          {t("auth.signIn")}
         </Link>
       </p>
     </form>

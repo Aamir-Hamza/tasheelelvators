@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useBrand } from "@/components/providers/brand-provider";
+import { useTranslatedBrand } from "@/i18n/useBrandCopy";
 
 const LOGO_SIZE = 1252;
 
@@ -32,13 +33,22 @@ export function Logo({
   lightWordmark = false,
   dynamicBrand = false,
 }: LogoProps) {
-  const { brand, chromeBrand } = useBrand();
-  const active = dynamicBrand ? brand : chromeBrand;
+  const { brand, footerBrand } = useBrand();
+  const liveCopy = useTranslatedBrand(brand.id);
+  const chromeCopy = useTranslatedBrand(footerBrand.id);
+  const copy = dynamicBrand ? liveCopy : chromeCopy;
+  const activeName = copy.name;
+  const subtitle = copy.subtitle;
+  const aria = copy.aria;
+  const accentClass = lightWordmark
+    ? dynamicBrand
+      ? "text-white/90"
+      : footerBrand.accent.className
+    : dynamicBrand
+      ? brand.colors.className
+      : "text-[#0284C7]";
 
-  const title = active.name;
-  const subtitle = active.subtitle;
-  const accentClass = lightWordmark ? active.accent.className : "text-[#0284C7]";
-  const aria = active.ariaLabel;
+  const title = activeName;
   const linkHref = href === null ? null : href;
 
   const image = (

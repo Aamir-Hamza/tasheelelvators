@@ -65,8 +65,8 @@ export const DIVISIONS = [
   {
     slug: "cctv-smart-home",
     name: "Tasheel Smart Systems",
-    shortName: "CCTV & Smart Systems",
-    href: "/cctv-smart-systems",
+    shortName: "Smart Systems",
+    href: "/smart-systems",
     accent: "amber" as const,
     tagline: "Intelligent security and connected living",
     description:
@@ -80,48 +80,45 @@ export const DIVISIONS = [
     cta: "Explore Smart Automation",
   },
   {
-    slug: "maintenance",
-    name: "Tasheel Maintenance Services",
-    shortName: "Maintenance Services",
-    href: "/maintenance",
+    slug: "engineering",
+    name: "Tasheel Engineering",
+    shortName: "Engineering",
+    href: "/engineering",
     accent: "slate" as const,
-    tagline: "Predictive AMC and zero-downtime technical care",
+    tagline: "Architectural design and facilities maintenance",
     description:
-      "Proactive annual maintenance contracts for elevators, security systems, and electro-mechanical infrastructure.",
+      "End-to-end architectural and MEP design plus reliable technical and facilities maintenance for buildings across Oman and the GCC.",
     highlights: [
-      "Elevator & escalator AMC",
-      "CCTV & access maintenance",
-      "Electro-mechanical care",
-      "24/7 emergency dispatch",
+      "CAD, 3D modeling & MEP design",
+      "Structural planning support",
+      "HVAC, electrical & mechanical care",
+      "Preventive facility audits",
     ],
-    cta: "Explore Maintenance Portal",
+    cta: "Explore Engineering Portal",
   },
 ] as const;
 
 export const HEADER_NAV = [
   {
-    label: "Services",
+    id: "services",
     href: "/services",
     children: [
-      { label: "Engineering Design & Consulting", href: "/services/engineering-design" },
-      { label: "Comprehensive Maintenance", href: "/maintenance" },
-      { label: "Systems Auditing", href: "/services/systems-auditing" },
-      { label: "Emergency Response", href: "/services/emergency" },
+      { id: "engineeringDesign", href: "/services/engineering-design" },
+      { id: "comprehensiveMaintenance", href: "/engineering" },
+      { id: "systemsAuditing", href: "/services/systems-auditing" },
+      { id: "emergencyResponse", href: "/services/emergency" },
     ],
   },
   {
-    label: "Divisions",
+    id: "divisions",
     href: "/divisions",
     children: [
-      { label: "Elevators & Escalators", href: "/elevators" },
-      { label: "CCTV & Smart Systems", href: "/cctv-smart-systems" },
-      { label: "Maintenance Services", href: "/maintenance" },
+      { id: "elevators", href: "/elevators" },
+      { id: "smartSystems", href: "/smart-systems" },
+      { id: "engineering", href: "/engineering" },
     ],
   },
-  { label: "Projects", href: "/projects" },
-  { label: "About Tasheel", href: "/about" },
-  { label: "Contact Us", href: "/contact" },
+  { id: "projects", href: "/projects" },
+  { id: "about", href: "/about" },
+  { id: "contact", href: "/contact" },
 ] as const;
-
-/** @deprecated use HEADER_NAV — kept for legacy product mega-menus */
-export const NAV_LINKS = HEADER_NAV;
