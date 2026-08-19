@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { HEADER_NAV } from "@/lib/constants";
-import { BRANDS_DATA, DIVISION_ORDER } from "@/config/brandsData";
+import { BRANDS_DATA, DIVISION_ORDER, type DivisionId } from "@/config/brandsData";
 import { useBrand } from "@/context/BrandContext";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/LanguageProvider";
@@ -21,24 +21,70 @@ function navLabel(t: (key: string) => string, id: string) {
   return t(`nav.${id}`);
 }
 
-function divisionNavCopy(t: (key: string) => string) {
-  return {
-    elevators: {
-      aria: t("brand.elevators.aria"),
-      subtitle: t("brand.elevators.subtitle"),
-      short: t("brand.elevators.short"),
-    },
-    "smart-systems": {
-      aria: t("brand.smartSystems.aria"),
-      subtitle: t("brand.smartSystems.subtitle"),
-      short: t("brand.smartSystems.short"),
-    },
-    engineering: {
-      aria: t("brand.engineering.aria"),
-      subtitle: t("brand.engineering.subtitle"),
-      short: t("brand.engineering.short"),
-    },
-  };
+function DivisionDesktopItem({
+  id,
+  selected,
+  onNavigate,
+}: {
+  id: DivisionId;
+  selected: boolean;
+  onNavigate?: () => void;
+}) {
+  const { t } = useI18n();
+  const { setBrandId } = useBrand();
+  const item = BRANDS_DATA[id];
+
+  return (
+    <Link
+      href={item.href}
+      role="menuitem"
+      onClick={() => {
+        setBrandId(id);
+        onNavigate?.();
+      }}
+      className={cn(
+        "flex flex-col rounded-xl px-4 py-3 transition hover:bg-slate-50",
+        selected && "bg-slate-50"
+      )}
+    >
+      <span className="text-sm font-semibold text-slate-900">{t(`brand.${id === "smart-systems" ? "smartSystems" : id}.aria`)}</span>
+      <span className={cn("mt-0.5 font-mono text-[10px] uppercase tracking-[0.14em]", item.colors.className)}>
+        {t(`brand.${id === "smart-systems" ? "smartSystems" : id}.subtitle`)}
+      </span>
+    </Link>
+  );
+}
+
+function DivisionMobileItem({
+  id,
+  selected,
+  onNavigate,
+}: {
+  id: DivisionId;
+  selected: boolean;
+  onNavigate?: () => void;
+}) {
+  const { t } = useI18n();
+  const { setBrandId } = useBrand();
+  const item = BRANDS_DATA[id];
+  const key = id === "smart-systems" ? "smartSystems" : id;
+
+  return (
+    <Link
+      href={item.href}
+      onClick={() => {
+        setBrandId(id);
+        onNavigate?.();
+      }}
+      className={cn(
+        "rounded-xl px-4 py-3 text-base font-semibold transition-colors",
+        selected ? "text-slate-900" : "text-slate-700 hover:bg-slate-50"
+      )}
+      style={selected ? { backgroundColor: item.colors.soft } : undefined}
+    >
+      {t(`brand.${key}.short`)}
+    </Link>
+  );
 }
 
 function DivisionsDropdown({
@@ -49,9 +95,8 @@ function DivisionsDropdown({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
-  const { brandId, setBrandId } = useBrand();
+  const { brandId } = useBrand();
   const { t } = useI18n();
-  const copyById = divisionNavCopy(t);
   const [open, setOpen] = useState(false);
   const active =
     pathname === "/divisions" ||
@@ -103,31 +148,14 @@ function DivisionsDropdown({
             className="absolute start-0 top-full z-50 pt-3"
           >
             <div className="min-w-[280px] rounded-2xl border border-slate-200/80 bg-white p-2 shadow-xl" role="menu">
-              {DIVISION_ORDER.map((id) => {
-                const item = BRANDS_DATA[id];
-                const copy = copyById[id];
-                const selected = brandId === id;
-                return (
-                  <Link
-                    key={id}
-                    href={item.href}
-                    role="menuitem"
-                    onClick={() => {
-                      setBrandId(id);
-                      onNavigate?.();
-                    }}
-                    className={cn(
-                      "flex flex-col rounded-xl px-4 py-3 transition hover:bg-slate-50",
-                      selected && "bg-slate-50"
-                    )}
-                  >
-                    <span className="text-sm font-semibold text-slate-900">{copy.aria}</span>
-                    <span className={cn("mt-0.5 font-mono text-[10px] uppercase tracking-[0.14em]", item.colors.className)}>
-                      {copy.subtitle}
-                    </span>
-                  </Link>
-                );
-              })}
+              {DIVISION_ORDER.map((id) => (
+                <DivisionDesktopItem
+                  key={id}
+                  id={id}
+                  selected={brandId === id}
+                  onNavigate={onNavigate}
+                />
+              ))}
             </div>
           </motion.div>
         )}
@@ -138,9 +166,8 @@ function DivisionsDropdown({
 
 export function Navbar({ onNavigate, variant = "desktop", inverted = false }: NavbarProps) {
   const pathname = usePathname();
-  const { brandId, setBrandId } = useBrand();
+  const { brandId } = useBrand();
   const { t } = useI18n();
-  const copyById = divisionNavCopy(t);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   if (variant === "mobile") {
@@ -149,28 +176,14 @@ export function Navbar({ onNavigate, variant = "desktop", inverted = false }: Na
         <p className="px-4 pb-1 pt-2 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
           {t("nav.divisions")}
         </p>
-        {DIVISION_ORDER.map((id) => {
-          const item = BRANDS_DATA[id];
-          const copy = copyById[id];
-          const selected = brandId === id;
-          return (
-            <Link
-              key={id}
-              href={item.href}
-              onClick={() => {
-                setBrandId(id);
-                onNavigate?.();
-              }}
-              className={cn(
-                "rounded-xl px-4 py-3 text-base font-semibold transition-colors",
-                selected ? "text-slate-900" : "text-slate-700 hover:bg-slate-50"
-              )}
-              style={selected ? { backgroundColor: item.colors.soft } : undefined}
-            >
-              {copy.short}
-            </Link>
-          );
-        })}
+        {DIVISION_ORDER.map((id) => (
+          <DivisionMobileItem
+            key={id}
+            id={id}
+            selected={brandId === id}
+            onNavigate={onNavigate}
+          />
+        ))}
 
         {HEADER_NAV.filter((link) => link.id !== "divisions").map((link) => {
           const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
