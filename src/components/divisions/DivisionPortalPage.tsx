@@ -8,6 +8,7 @@ import { CtaBand } from "@/components/home/cta-band";
 import { SITE } from "@/lib/constants";
 import { DIVISION_PORTALS, type DivisionPortal } from "@/data/division-portals";
 import type { HeroSlideId } from "@/data/hero-slides";
+import type { DivisionId } from "@/config/brandsData";
 import { useI18n } from "@/i18n/LanguageProvider";
 import { useTranslatedBrand } from "@/i18n/useBrandCopy";
 import { ElevatorSolutionsGrid } from "@/components/divisions/ElevatorSolutionsGrid";
