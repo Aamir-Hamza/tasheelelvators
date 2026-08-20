@@ -1,8 +1,14 @@
+export type ProjectCategory =
+  | "Commercial"
+  | "Hotels"
+  | "Shopping Malls"
+  | "Government";
+
 export type Project = {
   slug: string;
   title: string;
   location: string;
-  category: "Commercial" | "Residential" | "Hotels" | "Hospitals" | "Shopping Malls" | "Government";
+  categories: ProjectCategory[];
   year: string;
   summary: string;
   challenge: string;
@@ -10,117 +16,94 @@ export type Project = {
   results: string[];
   products: string[];
   image: string;
+  categoryImages?: Partial<Record<ProjectCategory, string>>;
 };
 
 export const projects: Project[] = [
   {
-    slug: "muscat-grand-tower",
-    title: "Muscat Grand Tower",
-    location: "Muscat, Oman",
-    category: "Commercial",
+    slug: "al-maabilah-project",
+    title: "Al Maabilah Project",
+    location: "Al Maabilah, Muscat, Oman",
+    categories: ["Commercial", "Hotels"],
     year: "2024",
     summary:
-      "Twelve high-speed passenger elevators and two panoramic units for a landmark commercial tower on the Corniche.",
+      "Passenger and service elevators for a commercial development in Al Maabilah, with destination control and ongoing AMC coverage.",
     challenge:
-      "High traffic peaks and tight construction windows required destination control and phased handover.",
+      "High occupancy traffic across mixed office and retail floors, with a tight handover window for phased occupancy.",
     solution:
-      "Deployed gearless high-speed elevators with destination dispatch, regenerative drives, and IoT monitoring.",
-    results: ["40% traffic wait reduction", "Phased handover on schedule", "Zero installation safety incidents"],
-    products: ["Passenger Elevators", "Panoramic Elevators"],
-    image: "/images/projects/muscat-grand.jpg",
+      "Installed gearless passenger lifts and a dedicated service elevator, with destination dispatch and IoT monitoring for commercial peak loads.",
+    results: [
+      "On-schedule phased handover",
+      "Reduced peak wait times across office floors",
+      "Full AMC onboarded at commissioning",
+    ],
+    products: ["Passenger Elevators", "Freight Elevators"],
+    image: "/projects/al-maabilah.jpg",
+    categoryImages: {
+      Commercial: "/projects/al-maabilah.jpg",
+      Hotels: "/projects/al-maabilah-hotel.jpg",
+    },
   },
   {
-    slug: "al-bustan-residences",
-    title: "Al Bustan Residences",
+    slug: "women-wallets",
+    title: "Women Wallets",
     location: "Muscat, Oman",
-    category: "Residential",
-    year: "2023",
-    summary:
-      "MRL passenger elevators across a luxury residential complex with quiet ride and premium cabin finishes.",
-    challenge:
-      "Limited machine room space and noise-sensitive residential floors.",
-    solution:
-      "Machine-room-less gearless systems with acoustic isolation and custom villa-grade interiors.",
-    results: ["Space savings of 12 m² per core", "Noise below residential limits", "Full AMC onboarded"],
-    products: ["MRL Elevators"],
-    image: "/images/projects/al-bustan.jpg",
-  },
-  {
-    slug: "sahara-hotel-resort",
-    title: "Sahara Hotel & Resort",
-    location: "Salalah, Oman",
-    category: "Hotels",
-    year: "2023",
-    summary:
-      "Service elevators, guest elevators, and outdoor escalators for a five-star coastal resort.",
-    challenge:
-      "Coastal corrosion risk and continuous guest operations during installation.",
-    solution:
-      "Marine-grade finishes, night-shift installation windows, and redundant service lifts.",
-    results: ["Corrosion-resistant specification", "No guest disruption", "Energy mode savings of 18%"],
-    products: ["Passenger Elevators", "Freight Elevators", "Escalators"],
-    image: "/images/projects/sahara-hotel.jpg",
-  },
-  {
-    slug: "royal-care-hospital",
-    title: "Royal Care Hospital",
-    location: "Sohar, Oman",
-    category: "Hospitals",
-    year: "2022",
-    summary:
-      "Bed elevators and stretcher-ready systems with priority emergency modes for a multi-specialty hospital.",
-    challenge:
-      "Strict hygiene requirements and uninterrupted critical care mobility.",
-    solution:
-      "Hospital-code elevators with antibacterial finishes, precise leveling, and fire service modes.",
-    results: ["EN hospital compliance", "Sub-second leveling accuracy", "24/7 AMC coverage"],
-    products: ["Hospital Elevators"],
-    image: "/images/projects/royal-care.jpg",
-  },
-  {
-    slug: "oasis-city-mall",
-    title: "Oasis City Mall",
-    location: "Muscat, Oman",
-    category: "Shopping Malls",
+    categories: ["Shopping Malls"],
     year: "2024",
     summary:
-      "Escalators, moving walkways, and public elevators for a major retail destination.",
+      "Public elevators, escalators, and moving walkways for the Women Wallets retail destination.",
     challenge:
-      "Extreme peak passenger volumes on weekends and holidays.",
+      "Peak weekend shopper traffic required high-capacity vertical mobility without interrupting retail operations.",
     solution:
-      "Heavy-duty escalators with auto energy modes and synchronized vertical cores.",
-    results: ["9000 pph capacity per bank", "Energy-saving modes active", "Predictive maintenance enabled"],
+      "Installed heavy-duty mall escalators, moving walkways, and public passenger elevators with energy-saving modes.",
+    results: [
+      "Smooth peak-hour passenger flow",
+      "Energy-saving modes active",
+      "Predictive maintenance enabled",
+    ],
     products: ["Escalators", "Moving Walkways", "Passenger Elevators"],
-    image: "/images/projects/oasis-mall.jpg",
+    image: "/projects/women-wallets.jpg",
   },
   {
-    slug: "ministry-complex",
-    title: "Government Ministry Complex",
+    slug: "university-of-technology",
+    title: "University of Technology",
     location: "Muscat, Oman",
-    category: "Government",
+    categories: ["Government"],
     year: "2021",
     summary:
-      "Secure passenger and freight elevators with access-controlled floors for a government campus.",
+      "Passenger and freight elevators with access-controlled academic floors for the University of Technology campus.",
     challenge:
-      "Security zoning and high reliability requirements.",
+      "High student traffic between lecture blocks, plus secure access for labs and administration.",
     solution:
-      "Access-integrated controllers, redundant freight capacity, and certified maintenance program.",
-    results: ["Secure floor access", "99.8% uptime SLA", "Audit-ready documentation"],
+      "Installed gearless passenger lifts and a dedicated service elevator with access-integrated controllers and a certified maintenance program.",
+    results: [
+      "Reliable peak-hour student circulation",
+      "Secure floor access for labs and admin",
+      "99.8% uptime SLA",
+    ],
     products: ["Passenger Elevators", "Freight Elevators"],
-    image: "/images/projects/ministry.jpg",
+    image: "/projects/university-of-technology.jpg",
   },
 ];
 
 export const projectCategories = [
   "All",
   "Commercial",
-  "Residential",
   "Hotels",
-  "Hospitals",
   "Shopping Malls",
   "Government",
 ] as const;
 
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);
+}
+
+export function getProjectCover(
+  project: Project,
+  category?: (typeof projectCategories)[number]
+) {
+  if (category && category !== "All") {
+    return project.categoryImages?.[category] ?? project.image;
+  }
+  return project.image;
 }

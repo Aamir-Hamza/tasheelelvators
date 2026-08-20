@@ -10,7 +10,7 @@ import { DIVISION_PORTALS, type DivisionPortal } from "@/data/division-portals";
 import type { HeroSlideId } from "@/data/hero-slides";
 import { useI18n } from "@/i18n/LanguageProvider";
 import { useTranslatedBrand } from "@/i18n/useBrandCopy";
-import type { DivisionId } from "@/config/brandsData";
+import { ElevatorSolutionsGrid } from "@/components/divisions/ElevatorSolutionsGrid";
 
 const PORTAL_TO_BRAND: Record<HeroSlideId, DivisionId> = {
   elevators: "elevators",
@@ -60,14 +60,18 @@ export function DivisionPortalPage({ id }: { id: HeroSlideId }) {
             {t("portal.productsBody")}
           </p>
 
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {portal.solutions.map((item) => (
-              <div key={item.title} className="rounded-3xl border border-border bg-card p-6">
-                <h3 className="font-display text-lg font-semibold">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{item.description}</p>
-              </div>
-            ))}
-          </div>
+          {portal.id === "elevators" ? (
+            <ElevatorSolutionsGrid solutions={portal.solutions} />
+          ) : (
+            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {portal.solutions.map((item) => (
+                <div key={item.title} className="rounded-3xl border border-border bg-card p-6">
+                  <h3 className="font-display text-lg font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

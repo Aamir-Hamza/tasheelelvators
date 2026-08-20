@@ -3,6 +3,8 @@ import type { HeroSlideId } from "@/data/hero-slides";
 export type PortalSolution = {
   title: string;
   description: string;
+  image?: string;
+  videoId?: string;
 };
 
 export type PortalAmcPlan = {
@@ -48,28 +50,31 @@ export const DIVISION_PORTALS: Record<HeroSlideId, DivisionPortal> = {
     ],
     solutions: [
       {
-        title: "Passenger Elevators",
-        description: "Quiet, high-traffic vertical mobility for towers, hotels, and residences.",
+        title: "Puzzle Parking System",
+        description:
+          "Car parking lift with lift-and-slide platforms — park more cars on the same land footprint.",
+        image: "/elevators/puzzle-parking.jpg",
+        videoId: "UY_fYHGjuoA",
       },
       {
-        title: "Freight & Hospital Lifts",
-        description: "Heavy-duty and stretcher-compatible systems for logistics and healthcare.",
+        title: "Escalator Walking",
+        description: "Passenger escalators and moving walks for malls, transit hubs, and high-traffic buildings.",
+        image: "/elevators/escalator-walking.jpg",
       },
       {
-        title: "Escalators & Moving Walks",
-        description: "Retail, transit, and mall circulation with durable outdoor-capable options.",
+        title: "Platform Lift / Home Lift",
+        description: "Compact villa and residence lifts engineered for tight shafts, quiet travel, and premium cabins.",
+        image: "/elevators/platform-home-lift.jpg",
       },
       {
-        title: "Modernization Packages",
-        description: "Controller, door, and cabin upgrades that extend asset life safely.",
+        title: "Stair Lift",
+        description: "Rail-mounted stair lifts for homes and institutions — safe, discreet accessibility on existing stairs.",
+        image: "/elevators/stair-lift.jpg",
       },
       {
-        title: "Panoramic & Villa Lifts",
-        description: "Architectural glass and compact residential mobility solutions.",
-      },
-      {
-        title: "Traffic & Design Consulting",
-        description: "Shaft planning, traffic analysis, and consultant-grade documentation.",
+        title: "Cargo Lift Supplier",
+        description: "Heavy-duty freight and goods lifts for warehouses, hospitals, and commercial loading bays.",
+        image: "/elevators/cargo-lift.jpg",
       },
     ],
     projects: [

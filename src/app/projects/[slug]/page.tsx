@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ProjectCover } from "@/components/projects/project-cover";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/shared/page-hero";
 import { getProject, projects } from "@/lib/data/projects";
@@ -29,7 +30,7 @@ export default async function ProjectDetailPage({ params }: Props) {
     <>
       <PageHero
         title={project.title}
-        description={`${project.location} · ${project.category} · ${project.year}`}
+        description={`${project.location} · ${project.categories.join(" · ")} · ${project.year}`}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Projects", href: "/projects" },
@@ -40,6 +41,12 @@ export default async function ProjectDetailPage({ params }: Props) {
         <div className="mx-auto max-w-7xl px-6">
           <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-navy to-navy-deep aspect-[21/9] relative mb-12">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_40%,rgba(27,143,255,0.3),transparent_55%)]" />
+            <ProjectCover
+              src={project.image}
+              alt={project.title}
+              sizes="(max-width: 1280px) 100vw, 1280px"
+              priority
+            />
           </div>
           <p className="max-w-3xl text-lg text-muted leading-relaxed">{project.summary}</p>
 

@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { projects, projectCategories } from "@/lib/data/projects";
+import { projects, projectCategories, getProjectCover } from "@/lib/data/projects";
+import { ProjectCover } from "@/components/projects/project-cover";
 import { ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFilterLabel } from "@/i18n/useBrandCopy";
@@ -11,7 +12,7 @@ export function ProjectFilters() {
   const [active, setActive] = useState<(typeof projectCategories)[number]>("All");
   const filterLabel = useFilterLabel();
   const filtered = useMemo(
-    () => (active === "All" ? projects : projects.filter((p) => p.category === active)),
+    () => (active === "All" ? projects : projects.filter((p) => p.categories.includes(active))),
     [active]
   );
 
@@ -36,9 +37,11 @@ export function ProjectFilters() {
 
       <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
-          {filtered.map((project) => (
+          {filtered.map((project) => {
+              const cover = getProjectCover(project, active);
+              return (
             <motion.div
-              key={project.slug}
+              key={`${project.slug}-${cover}`}
               layout
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -49,10 +52,11 @@ export function ProjectFilters() {
                 href={`/projects/${project.slug}`}
                 className="group block overflow-hidden rounded-3xl border border-border bg-card transition hover:shadow-[var(--shadow-soft)]"
               >
-                <div className="aspect-[16/10] bg-gradient-to-br from-navy to-navy-deep relative">
+                <div className="aspect-[16/10] bg-gradient-to-br from-navy to-navy-deep relative overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(27,143,255,0.25),transparent_50%)]" />
-                  <span className="absolute start-4 top-4 rounded-full bg-black/40 px-3 py-1 text-xs text-silver">
-                    {filterLabel(project.category)}
+                  <ProjectCover src={cover} alt={project.title} />
+                  <span className="absolute start-4 top-4 z-10 rounded-full bg-black/40 px-3 py-1 text-xs text-silver">
+                    {filterLabel(active === "All" ? project.categories[0] : active)}
                   </span>
                 </div>
                 <div className="p-6">
@@ -67,7 +71,8 @@ export function ProjectFilters() {
                 </div>
               </Link>
             </motion.div>
-          ))}
+              );
+            })}
         </AnimatePresence>
       </div>
     </div>
