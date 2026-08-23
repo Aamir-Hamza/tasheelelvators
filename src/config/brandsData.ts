@@ -177,8 +177,8 @@ export const BRANDS_DATA: Record<DivisionId, DivisionBrand> = {
       headline: "Comprehensive Engineering Design & Facilities Maintenance",
       subheadline:
         "End-to-end architectural, MEP design, and reliable technical maintenance services.",
-      image: "/slider/slide3.png",
-      imageAlt: "Tasheel Engineering design and facilities maintenance",
+      image: "/slider/engineering-design-hero.png",
+      imageAlt: "Tasheel Engineering — innovation in design, reliability in maintenance",
       primaryCta: { label: "Request Maintenance", href: "/quote?service=maintenance" },
       secondaryCta: { label: "Explore Design Services", href: "/services/engineering-design" },
     },

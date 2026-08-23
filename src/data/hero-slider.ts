@@ -46,8 +46,8 @@ export const HERO_SLIDER_SLIDES: HeroSliderSlide[] = [
   },
   {
     id: "maintenance",
-    src: "/slider/slide3.png",
-    alt: "Tasheel Engineering — design and facilities banner",
+    src: "/slider/engineering-design-hero.png",
+    alt: "Tasheel Engineering — innovation in design, reliability in maintenance",
     eyebrow: "Design & Facilities",
     title: "Engineering & Maintenance",
     subtitle: "Architectural, MEP design, and reliable technical maintenance.",

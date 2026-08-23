@@ -66,6 +66,8 @@ export type CategoryData = {
   theme: CategoryTheme;
   heroImage: string;
   heroImageAlt: string;
+  /** When true, the banner already contains logo/headline/CTA — do not cover it. */
+  embeddedHeroCopy?: boolean;
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
   stats: StatItem[];
@@ -319,8 +321,9 @@ export const COMPANY_CONTENT: CompanyContentConfig = {
       pill: "bg-orange-600 text-white",
       cta: "bg-orange-600 hover:bg-orange-500 text-white",
     },
-    heroImage: "/slider/slide3.png",
-    heroImageAlt: "Tasheel engineering drawings and site coordination",
+    heroImage: "/slider/engineering-design-hero.png",
+    heroImageAlt: "Tasheel Engineering — innovation in design, reliability in maintenance",
+    embeddedHeroCopy: true,
     primaryCta: { label: "Start a Design Package", href: "/quote?service=engineering-design" },
     secondaryCta: { label: "Open Engineering Portal", href: "/engineering" },
     stats: [
@@ -382,7 +385,7 @@ export const COMPANY_CONTENT: CompanyContentConfig = {
       {
         title: "Technical schematics",
         description: "Single-line diagrams and control schematics ready for authority.",
-        image: "/slider/slide3.png",
+        image: "/projects/ministry-mep-design.png",
         badge: "Docs",
       },
     ],
