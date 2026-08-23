@@ -9,7 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   BRANDS_DATA,
   BRAND_STORAGE_KEY,
@@ -19,6 +19,7 @@ import {
   type DivisionId,
 } from "@/config/brandsData";
 import { BRANDS, type BrandId, type BrandProfile } from "@/data/hero-slides";
+import { CATEGORY_SLUG, parseCategoryParam } from "@/data/servicesData";
 
 type BrandContextValue = {
   brandId: DivisionId;
@@ -44,11 +45,17 @@ function applyBrandCss(division: DivisionBrand) {
 export function BrandProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const portalDivision = pathToDivision(pathname);
   const isHome = pathname === "/";
   const isPortalPage = portalDivision !== null;
+  const queryDivision = parseCategoryParam(
+    searchParams.get("category") ?? searchParams.get("division")
+  );
 
-  const [brandId, setBrandIdState] = useState<DivisionId>(portalDivision ?? "elevators");
+  const [brandId, setBrandIdState] = useState<DivisionId>(
+    portalDivision ?? queryDivision ?? "elevators"
+  );
 
   const setBrandId = useCallback(
     (id: DivisionId, opts?: { navigate?: boolean }) => {
@@ -60,9 +67,16 @@ export function BrandProvider({ children }: { children: ReactNode }) {
       }
       if (opts?.navigate) {
         router.push(BRANDS_DATA[id].href);
+        return;
+      }
+      if (isHome) {
+        const slug = CATEGORY_SLUG[id];
+        if (searchParams.get("category") !== slug) {
+          router.push(`/?category=${slug}`, { scroll: false });
+        }
       }
     },
-    [router]
+    [router, isHome, searchParams]
   );
 
   useEffect(() => {
@@ -76,23 +90,35 @@ export function BrandProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    if (!isHome) {
+    if (isHome) {
+      if (queryDivision) {
+        setBrandIdState(queryDivision);
+        try {
+          window.localStorage.setItem(BRAND_STORAGE_KEY, queryDivision);
+        } catch {
+          /* ignore */
+        }
+        return;
+      }
       try {
         const stored = window.localStorage.getItem(BRAND_STORAGE_KEY);
-        if (isDivisionId(stored)) setBrandIdState(stored);
+        const next = isDivisionId(stored) ? stored : "elevators";
+        setBrandIdState(next);
+        router.replace(`/?category=${CATEGORY_SLUG[next]}`, { scroll: false });
       } catch {
-        /* ignore */
+        setBrandIdState("elevators");
+        router.replace("/?category=elevators", { scroll: false });
       }
       return;
     }
 
     try {
       const stored = window.localStorage.getItem(BRAND_STORAGE_KEY);
-      setBrandIdState(isDivisionId(stored) ? stored : "elevators");
+      if (isDivisionId(stored)) setBrandIdState(stored);
     } catch {
-      setBrandIdState("elevators");
+      /* ignore */
     }
-  }, [portalDivision, isHome, pathname]);
+  }, [portalDivision, isHome, pathname, queryDivision, router]);
 
   useEffect(() => {
     applyBrandCss(BRANDS_DATA[brandId]);

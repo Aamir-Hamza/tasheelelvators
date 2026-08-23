@@ -54,7 +54,7 @@ export const ar = {
     emergencyResponse: "الاستجابة للطوارئ",
     elevators: "المصاعد والسلالم الكهربائية",
     smartSystems: "الأنظمة الذكية",
-    engineering: "الهندسة",
+    engineering: "الهندسة والتصميم",
     quote: "عرض سعر",
     faq: "الأسئلة الشائعة",
     careers: "الوظائف",
@@ -68,7 +68,7 @@ export const ar = {
   brandBar: {
     elevators: "المصاعد",
     smartSystems: "الأنظمة الذكية",
-    engineering: "الهندسة",
+    engineering: "الهندسة والتصميم",
   },
   brand: {
     group: {
@@ -127,8 +127,8 @@ export const ar = {
       portalCta: "زيارة بوابة الأنظمة الذكية",
     },
     engineering: {
-      subtitle: "الهندسة",
-      short: "الهندسة",
+      subtitle: "الهندسة والتصميم",
+      short: "الهندسة والتصميم",
       aria: "تسهيل للهندسة",
       name: "تسهيل للهندسة",
       eyebrow: "التصميم والمرافق",

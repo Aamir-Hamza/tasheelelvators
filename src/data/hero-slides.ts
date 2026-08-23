@@ -94,7 +94,7 @@ export const BRANDS: Record<BrandId, BrandProfile> = {
   engineering: {
     id: "engineering",
     name: "TASHEEL",
-    subtitle: "ENGINEERING",
+    subtitle: "ENGINEERING AND DESIGN",
     ariaLabel: "Tasheel Engineering",
     accent: {
       hex: "#C2410C",

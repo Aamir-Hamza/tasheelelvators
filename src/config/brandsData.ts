@@ -158,8 +158,8 @@ export const BRANDS_DATA: Record<DivisionId, DivisionBrand> = {
   engineering: {
     id: "engineering",
     name: "TASHEEL",
-    subtitle: "ENGINEERING",
-    shortLabel: "Engineering",
+    subtitle: "ENGINEERING AND DESIGN",
+    shortLabel: "Engineering and Design",
     ariaLabel: "Tasheel Engineering",
     href: "/engineering",
     colors: {

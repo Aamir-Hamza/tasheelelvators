@@ -9,6 +9,7 @@ import { SITE } from "@/lib/constants";
 import { DIVISION_PORTALS, type DivisionPortal } from "@/data/division-portals";
 import type { HeroSlideId } from "@/data/hero-slides";
 import type { DivisionId } from "@/config/brandsData";
+import { CATEGORY_SLUG } from "@/data/servicesData";
 import { useI18n } from "@/i18n/LanguageProvider";
 import { useTranslatedBrand } from "@/i18n/useBrandCopy";
 import { ElevatorSolutionsGrid } from "@/components/divisions/ElevatorSolutionsGrid";
@@ -30,7 +31,7 @@ export function DivisionPortalPage({ id }: { id: HeroSlideId }) {
         title={copy.displayName}
         description={copy.subheadline}
         breadcrumbs={[
-          { labelKey: "common.home", href: `/?division=${id}` },
+          { labelKey: "common.home", href: `/?category=${CATEGORY_SLUG[PORTAL_TO_BRAND[id]]}` },
           { labelKey: "nav.divisions", href: "/divisions" },
           { label: copy.displayName },
         ]}

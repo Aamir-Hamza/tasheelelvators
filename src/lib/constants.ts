@@ -82,7 +82,7 @@ export const DIVISIONS = [
   {
     slug: "engineering",
     name: "Tasheel Engineering",
-    shortName: "Engineering",
+    shortName: "Engineering and Design",
     href: "/engineering",
     accent: "slate" as const,
     tagline: "Architectural design and facilities maintenance",

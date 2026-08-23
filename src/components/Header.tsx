@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, Phone, UserRound } from "lucide-react";
+import { Menu, UserRound } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Navbar } from "@/components/navigation/Navbar";
 import { TopBrandBar } from "@/components/navigation/TopBrandBar";
 import { MobileMenu } from "@/components/MobileMenu";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
-import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useI18n } from "@/i18n/LanguageProvider";
@@ -73,21 +71,6 @@ export function Header() {
                 </span>
               </Link>
             )}
-
-            <a
-              href={SITE.phoneHref}
-              className="hidden h-10 w-10 items-center justify-center rounded-full bg-amber-600 text-white shadow-md transition hover:bg-amber-700 xl:inline-flex 2xl:h-auto 2xl:w-auto 2xl:gap-2 2xl:px-3.5 2xl:py-2"
-              aria-label={t("common.callNow")}
-            >
-              <Phone className="h-4 w-4" />
-              <span className="hidden text-sm font-semibold 2xl:inline">{t("common.callNow")}</span>
-            </a>
-
-            <WhatsAppButton
-              variant="inline"
-              className="hidden !h-10 !w-10 !items-center !justify-center !px-0 !py-0 xl:!inline-flex 2xl:!h-auto 2xl:!w-auto 2xl:!px-3.5 2xl:!py-2"
-              label={<span className="hidden 2xl:inline">{t("common.whatsapp")}</span>}
-            />
 
             <Link
               href="/quote"

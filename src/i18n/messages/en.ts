@@ -54,7 +54,7 @@ export const en = {
     emergencyResponse: "Emergency Response",
     elevators: "Elevators & Escalators",
     smartSystems: "Smart Systems",
-    engineering: "Engineering",
+    engineering: "Engineering and Design",
     quote: "Quote",
     faq: "FAQ",
     careers: "Careers",
@@ -68,7 +68,7 @@ export const en = {
   brandBar: {
     elevators: "Elevators",
     smartSystems: "Smart Systems",
-    engineering: "Engineering",
+    engineering: "Engineering and Design",
   },
   brand: {
     group: {
@@ -84,9 +84,9 @@ export const en = {
       aria: "Tasheel Elevators & Escalators",
       name: "Tasheel Elevators & Escalators",
       eyebrow: "Vertical Transportation",
-      headline: "Elevators, Escalators & Preventive Maintenance",
+      headline: "Next-Generation Vertical Mobility & Lift Engineering",
       subheadline:
-        "Installation, modernization, and lifecycle care for passenger, freight, and panoramic systems across Oman and the GCC.",
+        "Delivering safe, high-speed, and energy-efficient passenger, panoramic, and industrial freight elevator solutions.",
       primaryCta: "Get a Quote",
       secondaryCta: "Explore Elevators",
       servicesEyebrow: "Elevators Division",
@@ -110,9 +110,9 @@ export const en = {
       aria: "Tasheel Smart Systems",
       name: "Tasheel Smart Systems",
       eyebrow: "CCTV & Automation",
-      headline: "Advanced CCTV & Smart Security Solutions",
+      headline: "Intelligent Surveillance & Integrated Security Infrastructure",
       subheadline:
-        "Enterprise surveillance, biometric access, and intelligent automation engineered for commercial and residential assets.",
+        "AI-powered CCTV surveillance, biometric access control, and unified building automation systems.",
       primaryCta: "Get a Quote",
       secondaryCta: "Explore CCTV Systems",
       servicesEyebrow: "Smart Systems Division",
@@ -130,13 +130,14 @@ export const en = {
       portalCta: "Visit Full Smart Systems Portal",
     },
     engineering: {
-      subtitle: "ENGINEERING",
-      short: "Engineering",
+      subtitle: "ENGINEERING AND DESIGN",
+      short: "Engineering and Design",
       aria: "Tasheel Engineering",
       name: "Tasheel Engineering",
       eyebrow: "Design & Facilities",
-      headline: "Comprehensive Engineering Design & Facilities Maintenance",
-      subheadline: "End-to-end architectural, MEP design, and reliable technical maintenance services.",
+      headline: "Precision Engineering, Architectural & Structural Solutions",
+      subheadline:
+        "End-to-end MEP engineering, 3D BIM modeling, feasibility studies, and certified architectural consultancy.",
       primaryCta: "Request Maintenance",
       secondaryCta: "Explore Design Services",
       servicesEyebrow: "Engineering Division",
