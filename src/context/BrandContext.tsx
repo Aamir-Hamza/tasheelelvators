@@ -2,6 +2,7 @@
 
 import {
   createContext,
+  Suspense,
   useCallback,
   useContext,
   useEffect,
@@ -42,20 +43,33 @@ function applyBrandCss(division: DivisionBrand) {
   root.dataset.brand = division.id;
 }
 
-export function BrandProvider({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-  const router = useRouter();
+/** Isolated so useSearchParams does not blank the header/footer while hydrating. */
+function BrandQuerySync({
+  onQuery,
+}: {
+  onQuery: (id: DivisionId | null) => void;
+}) {
   const searchParams = useSearchParams();
-  const portalDivision = pathToDivision(pathname);
-  const isHome = pathname === "/";
-  const isPortalPage = portalDivision !== null;
-  const queryDivision = parseCategoryParam(
+  const parsed = parseCategoryParam(
     searchParams.get("category") ?? searchParams.get("division")
   );
 
-  const [brandId, setBrandIdState] = useState<DivisionId>(
-    portalDivision ?? queryDivision ?? "elevators"
-  );
+  useEffect(() => {
+    onQuery(parsed);
+  }, [parsed, onQuery]);
+
+  return null;
+}
+
+export function BrandProvider({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const portalDivision = pathToDivision(pathname);
+  const isHome = pathname === "/";
+  const isPortalPage = portalDivision !== null;
+
+  const [brandId, setBrandIdState] = useState<DivisionId>(portalDivision ?? "elevators");
+  const [queryDivision, setQueryDivision] = useState<DivisionId | null>(null);
 
   const setBrandId = useCallback(
     (id: DivisionId, opts?: { navigate?: boolean }) => {
@@ -71,12 +85,17 @@ export function BrandProvider({ children }: { children: ReactNode }) {
       }
       if (isHome) {
         const slug = CATEGORY_SLUG[id];
-        if (searchParams.get("category") !== slug) {
+        try {
+          const current = new URLSearchParams(window.location.search).get("category");
+          if (current !== slug) {
+            router.push(`/?category=${slug}`, { scroll: false });
+          }
+        } catch {
           router.push(`/?category=${slug}`, { scroll: false });
         }
       }
     },
-    [router, isHome, searchParams]
+    [router, isHome]
   );
 
   useEffect(() => {
@@ -121,10 +140,10 @@ export function BrandProvider({ children }: { children: ReactNode }) {
   }, [portalDivision, isHome, pathname, queryDivision, router]);
 
   useEffect(() => {
-    applyBrandCss(BRANDS_DATA[brandId]);
+    applyBrandCss(BRANDS_DATA[brandId] ?? BRANDS_DATA.elevators);
   }, [brandId]);
 
-  const brand = BRANDS_DATA[brandId];
+  const brand = BRANDS_DATA[brandId] ?? BRANDS_DATA.elevators;
   const mappedBrandId = brandId as BrandId;
   const chromeBrand = BRANDS[mappedBrandId] ?? BRANDS.elevators;
   const footerBrand = isPortalPage ? chromeBrand : BRANDS.group;
@@ -143,7 +162,14 @@ export function BrandProvider({ children }: { children: ReactNode }) {
     [brandId, brand, chromeBrand, footerBrand, setBrandId, isHome, isPortalPage]
   );
 
-  return <BrandContext.Provider value={value}>{children}</BrandContext.Provider>;
+  return (
+    <BrandContext.Provider value={value}>
+      <Suspense fallback={null}>
+        <BrandQuerySync onQuery={setQueryDivision} />
+      </Suspense>
+      {children}
+    </BrandContext.Provider>
+  );
 }
 
 export function useBrand() {

@@ -15,7 +15,6 @@ export type LucideIconName =
   | "MoveHorizontal"
   | "PenTool"
   | "Ruler"
-  | "ScanFace"
   | "ShieldCheck"
   | "Sparkles"
   | "Video"
@@ -245,7 +244,7 @@ export const COMPANY_CONTENT: CompanyContentConfig = {
         title: "Biometric & RFID Access",
         description: "Face, fingerprint, and card readers tied into door controllers and alarms.",
         specs: ["Anti-passback", "Visitor logs", "Fail-secure"],
-        icon: "ScanFace",
+        icon: "Eye",
         image: "/cctv/orvibo-smart-lock.png",
         href: "/smart-systems#solutions",
       },
@@ -396,6 +395,9 @@ export const COMPANY_CONTENT: CompanyContentConfig = {
   },
 };
 
-export function getCategoryContent(id: DivisionId): CategoryData {
-  return COMPANY_CONTENT[id];
+export function getCategoryContent(id: DivisionId | string | null | undefined): CategoryData {
+  if (id && id in COMPANY_CONTENT) {
+    return COMPANY_CONTENT[id as DivisionId];
+  }
+  return COMPANY_CONTENT.elevators;
 }

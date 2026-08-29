@@ -16,7 +16,6 @@ import {
   MoveHorizontal,
   PenTool,
   Ruler,
-  ScanFace,
   ShieldCheck,
   Sparkles,
   Video,
@@ -38,7 +37,6 @@ const ICONS: Record<LucideIconName, typeof ArrowUpDown> = {
   MoveHorizontal,
   PenTool,
   Ruler,
-  ScanFace,
   ShieldCheck,
   Sparkles,
   Video,
@@ -60,7 +58,7 @@ export function FeatureGrid({ content }: { content: CategoryData }) {
 
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {content.services.map((service) => {
-            const Icon = ICONS[service.icon];
+            const Icon = ICONS[service.icon] ?? ArrowUpDown;
             return (
               <Link
                 key={service.title}

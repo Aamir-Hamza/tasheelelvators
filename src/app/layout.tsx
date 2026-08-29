@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
-import { Suspense } from "react";
 import { Plus_Jakarta_Sans, JetBrains_Mono, Cairo } from "next/font/google";
 import "./globals.css";
 import { BrandProvider } from "@/context/BrandContext";
@@ -102,20 +101,20 @@ export default async function RootLayout({
       <body className="antialiased">
         <LanguageProvider initialLocale={locale}>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <Suspense fallback={null}>
-              <BrandProvider>
-                <AuthProvider>
-                  <SmoothScroll>
-                    <JsonLd />
-                    <GoogleAnalytics id={process.env.NEXT_PUBLIC_GA_ID} />
-                    <Header />
-                    <main id="main">{children}</main>
-                    <Footer />
-                    <FloatingActions />
-                  </SmoothScroll>
-                </AuthProvider>
-              </BrandProvider>
-            </Suspense>
+            <BrandProvider>
+              <AuthProvider>
+                <SmoothScroll>
+                  <JsonLd />
+                  <GoogleAnalytics id={process.env.NEXT_PUBLIC_GA_ID} />
+                  <Header />
+                  <main id="main" className="min-h-screen">
+                    {children}
+                  </main>
+                  <Footer />
+                  <FloatingActions />
+                </SmoothScroll>
+              </AuthProvider>
+            </BrandProvider>
           </ThemeProvider>
         </LanguageProvider>
       </body>

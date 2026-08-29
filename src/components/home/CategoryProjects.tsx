@@ -22,7 +22,7 @@ export function CategoryProjects({
   brandId: DivisionId;
   content: CategoryData;
 }) {
-  const allowed = DIVISION_FILTER[brandId];
+  const allowed = DIVISION_FILTER[brandId] ?? DIVISION_FILTER.elevators;
   const projects = engineeringProjects.filter(
     (p) => p.division && allowed.includes(p.division)
   );

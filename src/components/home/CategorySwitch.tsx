@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { useBrand } from "@/context/BrandContext";
 import { getCategoryContent } from "@/data/servicesData";
 import { CategoryHero } from "@/components/home/CategoryHero";
@@ -10,63 +9,50 @@ import { ShowcaseSection } from "@/components/home/ShowcaseSection";
 import { CategoryProjects } from "@/components/home/CategoryProjects";
 import { DynamicCTA } from "@/components/home/DynamicCTA";
 import { scrollPageToTop } from "@/lib/scroll-to-top";
+import type { DivisionId } from "@/config/brandsData";
 
-const panel = {
-  hidden: { opacity: 0, y: 24 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] as const, staggerChildren: 0.08 },
-  },
-  exit: { opacity: 0, y: -16, transition: { duration: 0.2 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.32 } },
-};
-
-export function CategorySwitch() {
+export function CategorySwitch({ initialBrandId }: { initialBrandId: DivisionId }) {
   const { brandId } = useBrand();
-  const content = getCategoryContent(brandId);
-  const reduceMotion = useReducedMotion();
-  const skipFirst = useRef(true);
+  const [activeId, setActiveId] = useState<DivisionId>(initialBrandId);
+  const skipFirstScroll = useRef(true);
+  const skipFirstBrandSync = useRef(true);
+  const content = getCategoryContent(activeId);
 
   useEffect(() => {
-    if (skipFirst.current) {
-      skipFirst.current = false;
+    if (skipFirstBrandSync.current) {
+      skipFirstBrandSync.current = false;
+      if (brandId !== initialBrandId) return;
+    }
+    setActiveId(brandId);
+  }, [brandId, initialBrandId]);
+
+  useEffect(() => {
+    if (skipFirstScroll.current) {
+      skipFirstScroll.current = false;
       return;
     }
-    scrollPageToTop({ instant: Boolean(reduceMotion) });
-  }, [brandId, reduceMotion]);
+    let instant = false;
+    try {
+      instant = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch {
+      instant = false;
+    }
+    scrollPageToTop({ instant });
+  }, [activeId]);
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={brandId}
-        id="category-panel"
-        role="tabpanel"
-        aria-labelledby={`category-tab-${brandId}`}
-        variants={reduceMotion ? undefined : panel}
-        initial={reduceMotion ? false : "hidden"}
-        animate="show"
-        exit={reduceMotion ? undefined : "exit"}
-        className="bg-slate-950"
-      >
-        <CategoryHero content={content} />
-        <motion.div variants={reduceMotion ? undefined : item}>
-          <FeatureGrid content={content} />
-        </motion.div>
-        <motion.div variants={reduceMotion ? undefined : item}>
-          <ShowcaseSection content={content} />
-        </motion.div>
-        <motion.div variants={reduceMotion ? undefined : item}>
-          <CategoryProjects brandId={brandId} content={content} />
-        </motion.div>
-        <motion.div variants={reduceMotion ? undefined : item}>
-          <DynamicCTA content={content} />
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
+    <div
+      key={activeId}
+      id="category-panel"
+      role="tabpanel"
+      aria-labelledby={`category-tab-${activeId}`}
+      className="min-h-screen bg-slate-950 text-white"
+    >
+      <CategoryHero content={content} />
+      <FeatureGrid content={content} />
+      <ShowcaseSection content={content} />
+      <CategoryProjects brandId={activeId} content={content} />
+      <DynamicCTA content={content} />
+    </div>
   );
 }

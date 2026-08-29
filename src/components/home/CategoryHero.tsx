@@ -2,13 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { CategoryData } from "@/data/servicesData";
 
 export function CategoryHero({ content }: { content: CategoryData }) {
-  const reduceMotion = useReducedMotion();
   const embedded = Boolean(content.embeddedHeroCopy);
 
   return (
@@ -16,12 +14,13 @@ export function CategoryHero({ content }: { content: CategoryData }) {
       className="relative w-full overflow-hidden bg-slate-950"
       aria-labelledby="category-hero-heading"
     >
-      <div className="relative h-[62svh] min-h-[420px] max-h-[680px] sm:h-[74svh] sm:min-h-[520px] sm:max-h-none lg:h-[86vh] lg:min-h-[640px]">
+      <div className="relative h-[62vh] min-h-[420px] max-h-[680px] sm:h-[74vh] sm:min-h-[520px] sm:max-h-none lg:h-[86vh] lg:min-h-[640px]">
         <Image
           src={content.heroImage}
           alt={content.heroImageAlt}
           fill
           priority
+          quality={75}
           sizes="100vw"
           className={
             embedded
@@ -115,12 +114,9 @@ export function CategoryHero({ content }: { content: CategoryData }) {
             )}
 
             <dl className={cn("grid max-w-3xl gap-3 sm:grid-cols-3", embedded ? "mt-5" : "mt-10")}>
-              {content.stats.map((stat, i) => (
-                <motion.div
+              {content.stats.map((stat) => (
+                <div
                   key={stat.label}
-                  initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.12 + i * 0.08 }}
                   className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-md"
                 >
                   <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/55">
@@ -130,7 +126,7 @@ export function CategoryHero({ content }: { content: CategoryData }) {
                     {stat.value}
                   </dd>
                   {stat.hint ? <p className="mt-1 text-xs text-slate-300">{stat.hint}</p> : null}
-                </motion.div>
+                </div>
               ))}
             </dl>
           </div>

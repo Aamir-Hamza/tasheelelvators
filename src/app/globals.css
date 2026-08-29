@@ -77,6 +77,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Homepage body must paint even if a motion library fails to animate. */
+#category-panel {
+  min-height: 100vh;
+  background-color: #020617;
+  color: #fff;
+  opacity: 1;
+  visibility: visible;
+}
+
 h1,
 h2,
 h3,
