@@ -5,9 +5,13 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { CategoryData } from "@/data/servicesData";
+import { useI18n } from "@/i18n/LanguageProvider";
+import { BRAND_I18N_KEY } from "@/i18n/config";
 
 export function CategoryHero({ content }: { content: CategoryData }) {
-  const embedded = Boolean(content.embeddedHeroCopy);
+  const { t, locale } = useI18n();
+  const prefix = `category.${BRAND_I18N_KEY[content.id]}`;
+  const showEmbeddedBanner = Boolean(content.embeddedHeroCopy) && locale !== "ar";
 
   return (
     <section
@@ -23,16 +27,19 @@ export function CategoryHero({ content }: { content: CategoryData }) {
           quality={75}
           sizes="100vw"
           className={
-            embedded
+            showEmbeddedBanner
               ? "object-cover object-center"
               : "scale-110 object-cover object-[88%_center]"
           }
         />
-        {!embedded && (
+        {!showEmbeddedBanner && (
           <>
             <div className="absolute inset-0 bg-slate-950/55" aria-hidden />
             <div
-              className="absolute inset-0 bg-gradient-to-r from-slate-950 from-[12%] via-slate-950/90 via-[52%] to-slate-950/20 rtl:bg-gradient-to-l"
+              className={cn(
+                "absolute inset-0 bg-gradient-to-r from-slate-950 from-[12%] via-slate-950/90 via-[52%] to-slate-950/20 rtl:bg-gradient-to-l",
+                locale === "ar" && "from-[8%] via-slate-950/95 via-[68%] to-slate-950/50"
+              )}
               aria-hidden
             />
             <div
@@ -44,7 +51,7 @@ export function CategoryHero({ content }: { content: CategoryData }) {
             />
           </>
         )}
-        {embedded && (
+        {showEmbeddedBanner && (
           <div
             className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-slate-950/35 to-transparent"
             aria-hidden
@@ -54,20 +61,17 @@ export function CategoryHero({ content }: { content: CategoryData }) {
         <div
           className={cn(
             "relative z-10 flex h-full",
-            embedded ? "items-end" : "items-end sm:items-center"
+            showEmbeddedBanner ? "items-end" : "items-end sm:items-center"
           )}
         >
           <div className="mx-auto w-full max-w-7xl px-4 pb-8 pt-28 sm:px-6 sm:pb-10 sm:pt-28 lg:px-8">
-            {embedded ? (
+            {showEmbeddedBanner ? (
               <>
                 <h1 id="category-hero-heading" className="sr-only">
-                  Innovation in design, reliability in maintenance — Oman’s engineering partner
+                  {t(`${prefix}.embeddedHeadline`)}
                 </h1>
-                <Link
-                  href="/engineering#solutions"
-                  className="sr-only"
-                >
-                  Our Services
+                <Link href="/engineering#solutions" className="sr-only">
+                  {t(`${prefix}.embeddedCta`)}
                 </Link>
               </>
             ) : (
@@ -113,7 +117,7 @@ export function CategoryHero({ content }: { content: CategoryData }) {
               </>
             )}
 
-            <dl className={cn("grid max-w-3xl gap-3 sm:grid-cols-3", embedded ? "mt-5" : "mt-10")}>
+            <dl className={cn("grid max-w-3xl gap-3 sm:grid-cols-3", showEmbeddedBanner ? "mt-5" : "mt-10")}>
               {content.stats.map((stat) => (
                 <div
                   key={stat.label}

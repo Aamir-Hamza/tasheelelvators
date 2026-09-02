@@ -7,11 +7,18 @@ import { ProjectCover } from "@/components/projects/project-cover";
 import { ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFilterLabel } from "@/i18n/useBrandCopy";
+import { useI18n } from "@/i18n/LanguageProvider";
 import { useBrand } from "@/context/BrandContext";
 import { scrollPageToTop } from "@/lib/scroll-to-top";
 
+function tx(t: (key: string) => string, key: string, fallback: string) {
+  const value = t(key);
+  return value && value !== key ? value : fallback;
+}
+
 export function ProjectFilters() {
   const { brandId } = useBrand();
+  const { t } = useI18n();
   const [active, setActive] = useState<(typeof projectCategories)[number]>("All");
   const filterLabel = useFilterLabel();
 
@@ -76,20 +83,24 @@ export function ProjectFilters() {
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-navy to-navy-deep">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(27,143,255,0.25),transparent_50%)]" />
-                    <ProjectCover src={cover} alt={project.title} />
+                    <ProjectCover src={cover} alt={tx(t, `gallery.${project.slug}.title`, project.title)} />
                     <span className="absolute start-4 top-4 z-10 rounded-full bg-black/40 px-3 py-1 text-xs text-silver">
                       {filterLabel(active === "All" ? project.categories[0] : active)}
                     </span>
                   </div>
                   <div className="p-6">
                     <div className="flex items-start justify-between gap-3">
-                      <h2 className="font-display text-xl font-semibold">{project.title}</h2>
+                      <h2 className="font-display text-xl font-semibold">
+                        {tx(t, `gallery.${project.slug}.title`, project.title)}
+                      </h2>
                       <ArrowUpRight className="h-4 w-4 text-muted group-hover:text-electric" />
                     </div>
                     <p className="mt-2 text-sm text-muted">
-                      {project.location} · {project.year}
+                      {tx(t, `gallery.${project.slug}.location`, project.location)} · {project.year}
                     </p>
-                    <p className="mt-3 line-clamp-2 text-sm text-muted">{project.summary}</p>
+                    <p className="mt-3 line-clamp-2 text-sm text-muted">
+                      {tx(t, `gallery.${project.slug}.summary`, project.summary)}
+                    </p>
                   </div>
                 </Link>
               </motion.div>

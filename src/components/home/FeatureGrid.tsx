@@ -23,6 +23,7 @@ import {
   Wrench,
 } from "lucide-react";
 import type { CategoryData, LucideIconName } from "@/data/servicesData";
+import { useI18n } from "@/i18n/LanguageProvider";
 
 const ICONS: Record<LucideIconName, typeof ArrowUpDown> = {
   ArrowUpDown,
@@ -45,6 +46,7 @@ const ICONS: Record<LucideIconName, typeof ArrowUpDown> = {
 };
 
 export function FeatureGrid({ content }: { content: CategoryData }) {
+  const { t } = useI18n();
   return (
     <section id="services" className="bg-slate-950 py-20 text-white md:py-28" aria-labelledby="feature-grid-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -99,7 +101,7 @@ export function FeatureGrid({ content }: { content: CategoryData }) {
                     className="mt-5 inline-flex items-center gap-1 text-sm font-semibold"
                     style={{ color: content.theme.accent }}
                   >
-                    Learn more <ArrowUpRight className="h-4 w-4 rtl:rotate-180" />
+                    {t("common.learnMore")} <ArrowUpRight className="h-4 w-4 rtl:rotate-180" />
                   </span>
                 </div>
                 <div

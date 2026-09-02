@@ -1,3 +1,5 @@
+import { categoryAr, galleryAr } from "./category-copy";
+
 export const ar = {
   common: {
     tasheel: "تسهيل",
@@ -208,6 +210,8 @@ export const ar = {
     safety2Text: "وثائق الجهات المختصة ومسارات تدقيق لمشاريع عُمان والخليج.",
     safety3Title: "فرق معتمدة",
     safety3Text: "فنيون مدرَّبون من المصنع ومتخصصون هندسيون.",
+    selectedWork: "أعمال مختارة",
+    projectsInVertical: "مشاريع هذا التخصص",
   },
   filters: {
     All: "الكل",
@@ -561,4 +565,6 @@ export const ar = {
       description: "تقديم المشورة للمهندسين المعماريين والمطورين حول اختيار المنتجات وإعداد العروض الفنية.",
     },
   },
+  category: categoryAr,
+  gallery: galleryAr,
 } as const;

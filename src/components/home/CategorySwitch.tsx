@@ -9,14 +9,17 @@ import { ShowcaseSection } from "@/components/home/ShowcaseSection";
 import { CategoryProjects } from "@/components/home/CategoryProjects";
 import { DynamicCTA } from "@/components/home/DynamicCTA";
 import { scrollPageToTop } from "@/lib/scroll-to-top";
+import { useLocalizedCategory } from "@/i18n/useCategoryCopy";
+import { useI18n } from "@/i18n/LanguageProvider";
 import type { DivisionId } from "@/config/brandsData";
 
 export function CategorySwitch({ initialBrandId }: { initialBrandId: DivisionId }) {
   const { brandId } = useBrand();
+  const { locale } = useI18n();
   const [activeId, setActiveId] = useState<DivisionId>(initialBrandId);
   const skipFirstScroll = useRef(true);
   const skipFirstBrandSync = useRef(true);
-  const content = getCategoryContent(activeId);
+  const content = useLocalizedCategory(getCategoryContent(activeId));
 
   useEffect(() => {
     if (skipFirstBrandSync.current) {
@@ -42,7 +45,7 @@ export function CategorySwitch({ initialBrandId }: { initialBrandId: DivisionId 
 
   return (
     <div
-      key={activeId}
+      key={`${activeId}-${locale}`}
       id="category-panel"
       role="tabpanel"
       aria-labelledby={`category-tab-${activeId}`}

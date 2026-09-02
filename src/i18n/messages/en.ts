@@ -1,3 +1,5 @@
+import { categoryEn, galleryEn } from "./category-copy";
+
 export const en = {
   common: {
     tasheel: "TASHEEL",
@@ -216,6 +218,8 @@ export const en = {
     safety2Text: "Authority documentation and audit trails for Oman & GCC projects.",
     safety3Title: "Certified Teams",
     safety3Text: "Factory-trained technicians and engineering specialists.",
+    selectedWork: "Selected work",
+    projectsInVertical: "Projects in this vertical",
   },
   filters: {
     All: "All",
@@ -572,4 +576,6 @@ export const en = {
       description: "Advise architects and developers on product selection and prepare technical proposals.",
     },
   },
+  category: categoryEn,
+  gallery: galleryEn,
 } as const;

@@ -5,8 +5,10 @@ import { ArrowRight, MessageCircle, Phone } from "lucide-react";
 import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import type { CategoryData } from "@/data/servicesData";
+import { useI18n } from "@/i18n/LanguageProvider";
 
 export function DynamicCTA({ content }: { content: CategoryData }) {
+  const { t } = useI18n();
   return (
     <section className="relative overflow-hidden bg-slate-950 py-20 text-white md:py-28">
       <div
@@ -30,7 +32,7 @@ export function DynamicCTA({ content }: { content: CategoryData }) {
               content.theme.cta
             )}
           >
-            Request a proposal <ArrowRight className="h-4 w-4 rtl:rotate-180" />
+            {t("common.requestProposal")} <ArrowRight className="h-4 w-4 rtl:rotate-180" />
           </Link>
           <a
             href={SITE.whatsappHref}
@@ -38,13 +40,13 @@ export function DynamicCTA({ content }: { content: CategoryData }) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white hover:bg-white/15"
           >
-            <MessageCircle className="h-4 w-4" /> WhatsApp
+            <MessageCircle className="h-4 w-4" /> {t("common.whatsapp")}
           </a>
           <a
             href={SITE.emergencyHref}
             className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white hover:bg-white/15"
           >
-            <Phone className="h-4 w-4" /> Emergency
+            <Phone className="h-4 w-4" /> {t("common.emergency")}
           </a>
         </div>
       </div>
