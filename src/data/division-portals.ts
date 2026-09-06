@@ -5,6 +5,7 @@ export type PortalSolution = {
   description: string;
   image?: string;
   videoId?: string;
+  videoSrc?: string;
 };
 
 export type PortalAmcPlan = {
@@ -45,7 +46,7 @@ export const DIVISION_PORTALS: Record<HeroSlideId, DivisionPortal> = {
       "End-to-end elevator and escalator solutions — from shaft survey and installation to modernization and lifelong AMC across Oman & the GCC.",
     heroStats: [
       { value: "850+", label: "Projects Delivered" },
-      { value: "EN81", label: "European Compliance" },
+      { value: "EN 81 / EN 81 -20", label: "European Compliance" },
       { value: "99.8%", label: "System Uptime" },
     ],
     solutions: [
@@ -54,7 +55,7 @@ export const DIVISION_PORTALS: Record<HeroSlideId, DivisionPortal> = {
         description:
           "Car parking lift with lift-and-slide platforms — park more cars on the same land footprint.",
         image: "/elevators/puzzle-parking.jpg",
-        videoId: "UY_fYHGjuoA",
+        videoSrc: "/generated_video_related.mp4?v=2",
       },
       {
         title: "Escalator Walking",

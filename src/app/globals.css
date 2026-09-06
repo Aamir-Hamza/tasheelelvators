@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Match next-themes class strategy — do not follow OS dark mode on its own.
+   Otherwise `dark:text-white` paints white numbers on light cards in Chrome. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
@@ -59,7 +63,7 @@
   --color-light-gray: var(--light-gray);
   --font-display: var(--font-jakarta);
   --font-sans: var(--font-jakarta);
-  --font-mono: var(--font-mono);
+  --font-mono: var(--font-jetbrains);
 }
 
 * {
@@ -110,7 +114,7 @@ html[dir="rtl"] .font-mono {
 }
 
 .font-mono {
-  font-family: var(--font-mono), ui-monospace, monospace;
+  font-family: var(--font-jetbrains), var(--font-mono), ui-monospace, monospace;
 }
 
 ::selection {

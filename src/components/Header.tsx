@@ -52,6 +52,17 @@ export function Header() {
           <Navbar inverted={!solid} />
 
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            <Link
+              href="/divisions"
+              className={cn(
+                "inline-flex items-center rounded-full px-3 py-2 text-xs font-semibold transition xl:hidden",
+                solid
+                  ? "border border-slate-200 text-slate-800 hover:bg-slate-50"
+                  : "border border-white/25 text-white hover:bg-white/10"
+              )}
+            >
+              {t("nav.allServices")}
+            </Link>
             <LanguageSwitcher solid={solid} />
 
             {!loading && (

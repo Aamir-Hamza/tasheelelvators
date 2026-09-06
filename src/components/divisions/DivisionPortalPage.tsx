@@ -41,7 +41,7 @@ export function DivisionPortalPage({ id }: { id: HeroSlideId }) {
         <div className="mx-auto grid max-w-7xl gap-6 px-6 sm:grid-cols-3">
           {portal.heroStats.map((stat) => (
             <div key={stat.label} className="rounded-2xl border border-border bg-card px-5 py-4">
-              <p className="font-mono text-2xl font-semibold text-slate-900 dark:text-white">
+              <p className="font-display text-xl font-bold tracking-tight text-foreground sm:text-2xl">
                 {stat.value}
               </p>
               <p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-muted">{stat.label}</p>

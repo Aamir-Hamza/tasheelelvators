@@ -63,6 +63,8 @@ export const en = {
     primary: "Primary",
     mobilePrimary: "Mobile primary",
     tasheelDivisions: "Tasheel divisions",
+    seeDivision: "See {name}",
+    allServices: "All services",
   },
   header: {
     languageSwitcher: "Language switcher",

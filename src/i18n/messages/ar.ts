@@ -63,6 +63,8 @@ export const ar = {
     primary: "التنقل الرئيسي",
     mobilePrimary: "تنقل الجوال",
     tasheelDivisions: "أقسام تسهيل",
+    seeDivision: "عرض {name}",
+    allServices: "كل الخدمات",
   },
   header: {
     languageSwitcher: "اختيار اللغة",

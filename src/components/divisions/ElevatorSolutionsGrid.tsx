@@ -15,23 +15,34 @@ const COPY_KEYS: Record<string, { title: string; desc: string }> = {
   "Cargo Lift Supplier": { title: "portal.cargoTitle", desc: "portal.cargoDesc" },
 };
 
+type PlayingVideo = {
+  title: string;
+  youtubeId?: string;
+  src?: string;
+  poster?: string;
+};
+
+function hasVideo(item: PortalSolution) {
+  return Boolean(item.videoSrc || item.videoId);
+}
+
 export function ElevatorSolutionsGrid({ solutions }: { solutions: PortalSolution[] }) {
   const { t } = useI18n();
-  const [videoId, setVideoId] = useState<string | null>(null);
+  const [playing, setPlaying] = useState<PlayingVideo | null>(null);
 
   useEffect(() => {
-    if (!videoId) return;
+    if (!playing) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setVideoId(null);
+      if (e.key === "Escape") setPlaying(null);
     };
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
     };
-  }, [videoId]);
+  }, [playing]);
 
   return (
     <>
@@ -40,7 +51,7 @@ export function ElevatorSolutionsGrid({ solutions }: { solutions: PortalSolution
           const keys = COPY_KEYS[item.title];
           const title = keys ? t(keys.title) : item.title;
           const description = keys ? t(keys.desc) : item.description;
-          const featured = Boolean(item.videoId);
+          const featured = hasVideo(item);
 
           const Card = featured ? "button" : "article";
 
@@ -50,7 +61,13 @@ export function ElevatorSolutionsGrid({ solutions }: { solutions: PortalSolution
               {...(featured
                 ? {
                     type: "button" as const,
-                    onClick: () => setVideoId(item.videoId!),
+                    onClick: () =>
+                      setPlaying({
+                        title,
+                        youtubeId: item.videoId,
+                        src: item.videoSrc,
+                        poster: item.image,
+                      }),
                   }
                 : {})}
               className={cn(
@@ -69,7 +86,7 @@ export function ElevatorSolutionsGrid({ solutions }: { solutions: PortalSolution
                     priority={index === 0}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent" />
-                  {item.videoId && (
+                  {featured && (
                     <span className="absolute inset-0 flex items-center justify-center">
                       <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/95 text-slate-900 shadow-lg transition group-hover:scale-110">
                         <Play className="ms-0.5 h-7 w-7 fill-current" />
@@ -81,7 +98,7 @@ export function ElevatorSolutionsGrid({ solutions }: { solutions: PortalSolution
               <div className="p-6">
                 <h3 className="font-display text-lg font-semibold md:text-xl">{title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{description}</p>
-                {item.videoId && (
+                {featured && (
                   <p className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-sky-700">
                     <Play className="h-3.5 w-3.5 fill-current" />
                     {t("portal.watchVideo")}
@@ -93,20 +110,20 @@ export function ElevatorSolutionsGrid({ solutions }: { solutions: PortalSolution
         })}
       </div>
 
-      {videoId && (
+      {playing && (
         <div className="fixed inset-0 z-[80] flex items-center justify-center p-4">
           <button
             type="button"
             className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
             aria-label={t("portal.closeVideo")}
-            onClick={() => setVideoId(null)}
+            onClick={() => setPlaying(null)}
           />
           <div className="relative z-10 w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-slate-950 shadow-2xl">
             <div className="flex items-center justify-between px-4 py-3">
-              <p className="font-display text-sm font-semibold text-white">{t("portal.puzzleTitle")}</p>
+              <p className="font-display text-sm font-semibold text-white">{playing.title}</p>
               <button
                 type="button"
-                onClick={() => setVideoId(null)}
+                onClick={() => setPlaying(null)}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white/80 hover:bg-white/10 hover:text-white"
                 aria-label={t("portal.closeVideo")}
               >
@@ -114,13 +131,27 @@ export function ElevatorSolutionsGrid({ solutions }: { solutions: PortalSolution
               </button>
             </div>
             <div className="relative aspect-video bg-black">
-              <iframe
-                src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`}
-                title={t("portal.puzzleTitle")}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 h-full w-full"
-              />
+              {playing.src ? (
+                <video
+                  key={playing.src}
+                  src={playing.src}
+                  poster={playing.poster}
+                  controls
+                  autoPlay
+                  muted
+                  playsInline
+                  preload="auto"
+                  className="absolute inset-0 h-full w-full object-contain"
+                />
+              ) : (
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${playing.youtubeId}?autoplay=1&rel=0`}
+                  title={playing.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full"
+                />
+              )}
             </div>
           </div>
         </div>

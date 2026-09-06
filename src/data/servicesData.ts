@@ -122,7 +122,7 @@ export const COMPANY_CONTENT: CompanyContentConfig = {
     heroImage: "/slider/slide1.png",
     heroImageAlt: "Tasheel passenger elevator cabin and shaft",
     primaryCta: { label: "Specify a Lift", href: "/quote?service=elevators" },
-    secondaryCta: { label: "Open Elevators Portal", href: "/elevators" },
+    secondaryCta: { label: "See Elevators", href: "/elevators" },
     stats: [
       { label: "Rated speed", value: "4.0 m/s", hint: "High-rise passenger banks" },
       { label: "Fleet uptime", value: "99.9%", hint: "AMC-backed availability" },
@@ -223,7 +223,7 @@ export const COMPANY_CONTENT: CompanyContentConfig = {
     heroImage: "/slider/slide2.png",
     heroImageAlt: "Tasheel CCTV and smart security operations",
     primaryCta: { label: "Request Security Audit", href: "/quote?service=security-audit" },
-    secondaryCta: { label: "Open Smart Systems Portal", href: "/smart-systems" },
+    secondaryCta: { label: "See Smart Systems", href: "/smart-systems" },
     stats: [
       { label: "Video class", value: "4K UHD", hint: "AI analytics ready" },
       { label: "Face match", value: "<0.2s", hint: "On-edge recognition" },
@@ -324,7 +324,7 @@ export const COMPANY_CONTENT: CompanyContentConfig = {
     heroImageAlt: "Tasheel Engineering — innovation in design, reliability in maintenance",
     embeddedHeroCopy: true,
     primaryCta: { label: "Start a Design Package", href: "/quote?service=engineering-design" },
-    secondaryCta: { label: "Open Engineering Portal", href: "/engineering" },
+    secondaryCta: { label: "See Engineering", href: "/engineering" },
     stats: [
       { label: "Authority packs", value: "100%", hint: "Code-compliant submissions" },
       { label: "Model precision", value: "mm CAD", hint: "Coordinated 3D BIM" },
