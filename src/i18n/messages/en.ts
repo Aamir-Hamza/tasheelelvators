@@ -268,8 +268,7 @@ export const en = {
   },
   quote: {
     title: "Request a Quote",
-    description:
-      "Use our capacity-aware calculator for planning ranges, then submit details for an engineer-reviewed proposal.",
+    description: "Share your project details and receive an engineer-reviewed proposal from Tasheel.",
     fullName: "Full name",
     email: "Email",
     phone: "Phone",

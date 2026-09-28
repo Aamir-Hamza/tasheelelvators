@@ -4,8 +4,7 @@ import { QuoteCalculator } from "@/components/forms/quote-calculator";
 
 export const metadata: Metadata = {
   title: "Request a Quote",
-  description:
-    "Get an indicative elevator project estimate and request a formal proposal from Tasheel Elevators.",
+  description: "Request a formal proposal from Tasheel Elevators.",
 };
 
 export default function QuotePage() {

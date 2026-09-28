@@ -389,11 +389,6 @@ export const galleryEn = {
     location: "Muscat, Oman",
     summary: "CCTV, lobby access, and parking surveillance for a commercial building in Muscat.",
   },
-  "an-khansa-bhotec": {
-    title: "An Khansa Bhotec",
-    location: "Muscat, Oman",
-    summary: "Discreet CCTV and access control for An Khansa Bhotec.",
-  },
   "wc-onic-al-khuwair": {
     title: "WC ONIC Al Khuwair",
     location: "Al Khuwair, Muscat, Oman",
@@ -463,11 +458,6 @@ export const galleryAr = {
     title: "مبنى تجاري",
     location: "مسقط، عُمان",
     summary: "كاميرات ودخول للوبي ومراقبة مواقف لمبنى تجاري في مسقط.",
-  },
-  "an-khansa-bhotec": {
-    title: "الخنساء بيوتيك",
-    location: "مسقط، عُمان",
-    summary: "كاميرات وتحكم في الدخول بشكل متكتّم للخنساء بيوتيك.",
   },
   "wc-onic-al-khuwair": {
     title: "WC أونيك الخوير",

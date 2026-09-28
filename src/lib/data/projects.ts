@@ -159,23 +159,6 @@ export const projects: Project[] = [
     image: "/projects/commercial-building-cctv.png",
   },
   {
-    slug: "an-khansa-bhotec",
-    title: "An Khansa Bhotec",
-    location: "Muscat, Oman",
-    division: "smart-systems",
-    categories: ["Commercial"],
-    year: "2023",
-    summary:
-      "Discreet CCTV and access control for An Khansa Bhotec.",
-    challenge:
-      "A sensitive facility needed coverage without disrupting clinical or lab operations.",
-    solution:
-      "Placed compact cameras and access readers with a quiet NVR room and monitored alerts.",
-    results: ["Discreet camera layout", "Controlled staff access", "Continuous recording"],
-    products: ["IP Cameras", "Access Control", "NVR Storage"],
-    image: "/projects/an-khansa-bhotec.png",
-  },
-  {
     slug: "wc-onic-al-khuwair",
     title: "WC ONIC Al Khuwair",
     location: "Al Khuwair, Muscat, Oman",
